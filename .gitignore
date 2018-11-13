@@ -1,4 +1,5 @@
 ##Folders
-target.settings
+target
+.settings
 ##file
 .classpath
