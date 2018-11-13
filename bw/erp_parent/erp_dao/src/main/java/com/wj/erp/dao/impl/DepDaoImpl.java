@@ -2,6 +2,7 @@ package com.wj.erp.dao.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -25,28 +26,28 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 	 */
 	@Override
 	public List<Dep> getList(Dep dep,Dep dep2,Object param) {
-		DetachedCriteria dc = DetachedCriteria.forClass(Dep.class);
+		/*DetachedCriteria dc = DetachedCriteria.forClass(Dep.class);
 		if(null != dep) {
 			if(null != dep.getName() && dep.getName().trim().length() > 0) {
-				/*
+				
 				 * MatchMode.ANYWHERE %abc%
 				 * MatchMode.START %abc
 				 * MatchMode.END  abc%
 				 * MatchMode.EXACT abc
-				 */
+				 
 				dc.add(Restrictions.like("name", dep.getName(),MatchMode.ANYWHERE));
 			}
 			if(null != dep.getTele() && dep.getTele().trim().length() > 0) {
-				/*
+				
 				 * MatchMode.ANYWHERE %abc%
 				 * MatchMode.START %abc
 				 * MatchMode.END  abc%
 				 * MatchMode.EXACT abc
-				 */
+				 
 				dc.add(Restrictions.like("tele", dep.getTele(),MatchMode.ANYWHERE));
 			}
-		}
-		return (List<Dep>) this.getHibernateTemplate().findByCriteria(dc);
+		}*/
+		return (List<Dep>) this.getHibernateTemplate().findByCriteria(this.getDetachedCriteria(dep));
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 	}
 
 	@Override
-	public List<Dep> getListByPage(Dep dep, Integer page, Integer rows) {
+	public List<Dep> getListByPage(Dep dep,Dep dep2,Object param,Integer page, Integer rows) {
 		/*DetachedCriteria dc = DetachedCriteria.forClass(Dep.class);
 		if(null != dep) {
 			if(null != dep.getName() && dep.getName().trim().length() > 0) {
@@ -97,6 +98,11 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 			if(null != dep.getTele() && dep.getTele().trim().length() > 0) {
 				dc.add(Restrictions.like("tele", dep.getTele(),MatchMode.ANYWHERE));
 			}
+			
+			//根据id去查询最好不要这样写，利用hibernate的主键直接查询
+			/*if(null != dep.getUuid()) {
+				dc.add(Restrictions.eq("uuid", dep.getUuid()));
+			}*/
 		}
 		
 		dc.addOrder(Order.desc("uuid"));
@@ -107,6 +113,16 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 	@Override
 	public void add(Dep dep) {
 		this.getHibernateTemplate().save(dep);
+	}
+
+	@Override
+	public void delete(Dep dep) {
+		this.getHibernateTemplate().delete(dep);
+	}
+
+	@Override
+	public Dep getById(Dep dep) {
+		return this.getHibernateTemplate().get(Dep.class, dep.getUuid());
 	}
 
 }

@@ -130,5 +130,30 @@ public class DepAction {
 		this.write(JSON.toJSONString(rtn));
 	}
 	
+	/**
+	 * 删除方法
+	 */
+	public void delete() {
+		Map<String,Object> rtn = new HashMap<String,Object>();
+		try {
+			depBiz.delete(dep);
+			rtn.put("success", true);
+			rtn.put("message", "删除成功");
+		} catch (Exception e) {
+			rtn.put("success", false);
+			rtn.put("message", "删除失败");
+		}
+		
+		this.write(JSON.toJSONString(rtn));
+	}
+	
+	public void getData() {
+		if(null != dep && null != dep.getUuid()) {
+			dep = depBiz.get(dep);
+			this.write(JSON.toJSONString(dep));
+		}
+		
+	}
+	
 	
 }

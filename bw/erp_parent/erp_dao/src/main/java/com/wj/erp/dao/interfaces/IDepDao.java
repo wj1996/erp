@@ -12,7 +12,11 @@ public interface IDepDao {
 
 	Integer getCount(Dep dep,Dep dep2,Object param);
 
-	List<Dep> getListByPage(Dep dep, Integer page, Integer rows);
+	List<Dep> getListByPage(Dep dep,Dep dep2,Object param,Integer page, Integer rows);
 	
 	void add(Dep dep);
+	
+	void delete(Dep dep);
+	
+	Dep getById(Dep dep);
 }
