@@ -36,7 +36,7 @@ public class DepBizImpl implements IDepBiz{
 		//总页数
 		Integer totalPage = 0;
 		if(null != totalSize) totalPage = (int) Math.ceil((double)totalSize / rows);
-		List<Dep> list = depDao.getListByPage(dep1,page,rows);
+		List<Dep> list = depDao.getListByPage(dep1,dep2,param,page,rows);
 		pageBean.setPage(page);
 		pageBean.setRows(rows);
 		pageBean.setTotalSize(totalSize);
@@ -48,6 +48,22 @@ public class DepBizImpl implements IDepBiz{
 	@Override
 	public void add(Dep dep) {
 		depDao.add(dep);
+	}
+
+	@Override
+	public void delete(Dep dep) throws Exception{
+		//service层处理，先查询出来
+		List<Dep> list = depDao.getList(dep, null, null);
+		if(null != list && list.size() == 1) {
+			depDao.delete(list.get(0));
+		}else {
+//			throw new Exception("删除失败");
+		}
+	}
+
+	@Override
+	public Dep get(Dep dep) {
+		return depDao.getById(dep);
 	}
 
 }

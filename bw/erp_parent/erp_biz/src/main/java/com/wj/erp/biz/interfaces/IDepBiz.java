@@ -19,4 +19,8 @@ public interface IDepBiz {
 	PageBean<Dep> getListByPage(Dep dep1,Dep dep2,Object param,Integer page, Integer rows);
 	
 	void add(Dep dep);
+	
+	void delete(Dep dep) throws Exception;
+	
+	Dep get(Dep dep);
 }
