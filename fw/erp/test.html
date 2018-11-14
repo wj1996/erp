@@ -3,12 +3,29 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<script src="ui/jquery.min.js"></script>
 		<script>
 			function test(){
-				alert(1);
+				var data = bb();
+				alert(data);
 			}
 			
-			
+			function bb(){
+				var data = 1;
+				$.ajax({
+					url:"http://localhost:9090/erp/depAction_getData",
+					dataType:"jsonp",
+					jsonp:"callback",
+					jsonpCallback:"callback",
+					async:false,
+					success:function(rtn){
+						alert(rtn);
+						data = 2;
+					}
+				});
+				
+				return data;
+			}
 			
 		</script>
 	</head>
