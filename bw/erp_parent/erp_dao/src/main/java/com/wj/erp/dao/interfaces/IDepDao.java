@@ -19,4 +19,6 @@ public interface IDepDao {
 	void delete(Dep dep);
 	
 	Dep getById(Dep dep);
+
+	void update(Dep dep);
 }

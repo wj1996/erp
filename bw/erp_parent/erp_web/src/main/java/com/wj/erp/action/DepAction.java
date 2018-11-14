@@ -90,6 +90,7 @@ public class DepAction {
 		try {
 			String jsonp = ServletActionContext.getRequest().getParameter("callback");
 			HttpServletResponse response = ServletActionContext.getResponse();
+//			response.addHeader("Access-Control-Allow-Origin", "*");
 			response.setContentType("text/json;charset=utf-8");
 			if(StringUtils.isNotBlank(jsonp)) {
 				response.getWriter().write(jsonp + "(" + jsonString + ")");	
@@ -150,9 +151,37 @@ public class DepAction {
 	public void getData() {
 		if(null != dep && null != dep.getUuid()) {
 			dep = depBiz.get(dep);
-			this.write(JSON.toJSONString(dep));
+			Map<String,Object> map = new HashMap<>();
+			map.put("dep.name", dep.getName());
+			map.put("dep.tele", dep.getTele());
+			map.put("dep.uuid", dep.getUuid());
+			this.write(JSON.toJSONString(map));
 		}
 		
+	}
+	
+	/**
+	 * 修改方法
+	 */
+	public void update() {
+		Map<String,Object> rtn = new HashMap<String,Object>();
+		try {
+			if(null != dep && null != dep.getUuid()) {
+				Dep originDep = depBiz.get(dep);
+				if(null != originDep) {
+					originDep.setName(dep.getName());
+					originDep.setTele(dep.getTele());
+					depBiz.update(originDep);
+					rtn.put("success", true);
+					rtn.put("message", "修改成功");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			rtn.put("success", false);
+			rtn.put("message", "修改失败");
+		}
+		this.write(JSON.toJSONString(rtn));
 	}
 	
 	

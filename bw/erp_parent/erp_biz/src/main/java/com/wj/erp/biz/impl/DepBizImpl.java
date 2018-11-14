@@ -66,4 +66,9 @@ public class DepBizImpl implements IDepBiz{
 		return depDao.getById(dep);
 	}
 
+	@Override
+	public void update(Dep dep) {
+		depDao.update(dep);
+	}
+
 }

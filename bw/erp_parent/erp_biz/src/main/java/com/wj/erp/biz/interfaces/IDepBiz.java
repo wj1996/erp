@@ -23,4 +23,6 @@ public interface IDepBiz {
 	void delete(Dep dep) throws Exception;
 	
 	Dep get(Dep dep);
+
+	void update(Dep dep);
 }

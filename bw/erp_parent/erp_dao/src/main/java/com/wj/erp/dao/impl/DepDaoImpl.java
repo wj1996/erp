@@ -100,9 +100,9 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 			}
 			
 			//根据id去查询最好不要这样写，利用hibernate的主键直接查询
-			/*if(null != dep.getUuid()) {
+			if(null != dep.getUuid()) {
 				dc.add(Restrictions.eq("uuid", dep.getUuid()));
-			}*/
+			}
 		}
 		
 		dc.addOrder(Order.desc("uuid"));
@@ -123,6 +123,11 @@ public class DepDaoImpl extends HibernateDaoSupport implements IDepDao{
 	@Override
 	public Dep getById(Dep dep) {
 		return this.getHibernateTemplate().get(Dep.class, dep.getUuid());
+	}
+
+	@Override
+	public void update(Dep dep) {
+		this.getHibernateTemplate().update(dep);
 	}
 
 }
