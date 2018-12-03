@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+	<class name="com.wj.erp.entity.Emp" table="emp">
+		<id name="uuid">
+			<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+				<param name="sequence_name">emp_seq</param>
+			</generator>
+		</id>
+		<property name="username" />
+		<property name="pwd" />
+		<property name="name" />
+		<property name="gender" />
+		<property name="email" />
+		<property name="tele" />
+		<property name="address" />
+		<property name="birthday" />
+		<!-- <property name="depuuid" /> -->
+		<!-- 修改为外键指向 -->
+		<many-to-one name="dep" class="com.wj.erp.entity.Dep" column="depuuid" lazy="false"></many-to-one>
+	</class>
+</hibernate-mapping>

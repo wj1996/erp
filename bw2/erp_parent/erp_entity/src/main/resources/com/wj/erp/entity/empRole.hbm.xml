@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+	<class name="com.wj.erp.entity.EmpRole" table="empRole">
+		<id name="uuid">
+			<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+				<param name="sequence_name">empRole_seq</param>
+			</generator>
+		</id>
+		<property name="empuuid" />
+		<property name="roleuuid" />
+	</class>
+</hibernate-mapping>

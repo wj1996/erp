@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+	<class name="com.wj.erp.entity.Returnorderdetail" table="returnorderdetail">
+		<id name="uuid">
+			<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+				<param name="sequence_name">returnorderdetail_seq</param>
+			</generator>
+		</id>
+		<property name="goodsuuid" />
+		<property name="goodsname" />
+		<property name="price" />
+		<property name="num" />
+		<property name="money" />
+		<property name="endtime" />
+		<property name="ender" />
+		<property name="storeuuid" />
+		<property name="state" />
+		<property name="ordersuuid" />
+	</class>
+</hibernate-mapping>

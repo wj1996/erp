@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
+
+	
+	<!-- [comment] -->
+	<bean id="depDao" class="com.wj.erp.dao.impl.DepDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="empDao" class="com.wj.erp.dao.impl.EmpDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="empRoleDao" class="com.wj.erp.dao.impl.EmpRoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="goodsDao" class="com.wj.erp.dao.impl.GoodsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="goodstypeDao" class="com.wj.erp.dao.impl.GoodstypeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="inventoryDao" class="com.wj.erp.dao.impl.InventoryDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="menuDao" class="com.wj.erp.dao.impl.MenuDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="orderdetailDao" class="com.wj.erp.dao.impl.OrderdetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="ordersDao" class="com.wj.erp.dao.impl.OrdersDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="returnorderdetailDao" class="com.wj.erp.dao.impl.ReturnorderdetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="returnordersDao" class="com.wj.erp.dao.impl.ReturnordersDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="roleDao" class="com.wj.erp.dao.impl.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="roleMenuDao" class="com.wj.erp.dao.impl.RoleMenuDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="storeDao" class="com.wj.erp.dao.impl.StoreDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="storedetailDao" class="com.wj.erp.dao.impl.StoredetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="storeoperDao" class="com.wj.erp.dao.impl.StoreoperDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- [comment] -->
+	<bean id="supplierDao" class="com.wj.erp.dao.impl.SupplierDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- <import resource="classpath:applicationContext_datasource.xml"/> -->
+</beans>

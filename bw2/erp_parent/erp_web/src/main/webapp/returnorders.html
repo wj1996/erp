@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>退货订单管理</title>
+<link rel="stylesheet" href="ui/themes/default/easyui.css" />
+<link rel="stylesheet" href="ui/themes/icon.css" />
+<script src="ui/jquery.min.js"></script>
+<script src="ui/jquery.easyui.min.js"></script>
+<script src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script src="ui/jquery.serializejson.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#grid').datagrid({
+			url:"returnordersAction_getListByPage",
+			columns:[[
+				{field:'uuid',title:'编号',width:100},
+				{field:'createtime',title:'生成日期',width:100},
+				{field:'checktime',title:'检查日期',width:100},
+				{field:'endtime',title:'结束日期',width:100},
+				{field:'type',title:'订单类型',width:100},
+				{field:'creater',title:'下单员',width:100},
+				{field:'checker',title:'审核员工编号',width:100},
+				{field:'ender',title:'库管员',width:100},
+				{field:'supplieruuid',title:'供应商及客户编号',width:100},
+				{field:'totalmoney',title:'合计金额',width:100},
+				{field:'state',title:'订单状态',width:100},
+				{field:'waybillsn',title:'运单号',width:100},
+				{field:'ordersuuid',title:'原订单编号',width:100},
+				{field:'-',title:'操作',formatter:function(value,row,index){
+					var opr = "<a href='javascript:void(0)' onclick='edit(" + row.uuid + ")'>修改</a>";
+					opr += " <a href='javascript:void(0)' onclick='del(" + row.uuid + ")'>删除</a>";
+					return opr;
+				}}
+			]],
+			singletSelect:true,
+			pagination: true,
+			toolbar:[{
+				text:'新增',
+				iconCls:'icon-add',
+				handler:function(){
+					$("#addDlg").dialog("open");
+				}
+			}]
+		});	
+		$("#btnSearch").bind("click",function(){
+			//把表单数据转换成JSON对象
+			var formData = $("#searchForm").serializeJSON();
+			//把JSON对象转换成字符串
+			//alert(JSON.stringify(formData));
+			
+			$("#grid").datagrid("load",formData);
+			//alert(JSON.stringify($("#grid").datagrid("getData")));
+			/* $.ajax({
+				url: 'depAction_getList',
+				data: formData,
+				dataType: 'json',
+				type: 'post',
+				success:function(rtn){
+					$("#grid").datagrid("loadData",rtn);
+				}
+			}); */
+		});
+		
+		$("#addDlg").dialog({
+			title:"增加退货订单",
+			width:300,
+			height:200,
+			closed:true,//窗口是否为关闭状体,true表示关闭
+			modal:true
+		});
+		
+		$("#editDlg").dialog({
+			title:"修改退货订单",
+			width:300,
+			height:200,
+			closed:true,//窗口是否为关闭状体,true表示关闭
+			modal:true
+		});
+		
+		$("#btnSave").bind("click",function(){
+			var formData = $("#addForm").serializeJSON();
+			$.ajax({
+				url:"http://localhost:9090/erp/returnordersAction_add",
+				data:formData,
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,"info",function(){
+						//成功的话,关闭窗口
+						$("#addDlg").dialog("close");
+						//刷新表格数据
+						$("#grid").datagrid("reload");
+					});
+				}
+			});
+		});
+		$("#btnEdit").bind("click",function(){
+			var formData = $("#editForm").serializeJSON();
+			$.ajax({
+				url:"http://localhost:9090/erp/returnordersAction_update",
+				data:formData,
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,"info",function(){
+						//成功的话,关闭窗口
+						$("#editDlg").dialog("close");
+						//刷新表格数据
+						$("#grid").datagrid("reload");
+					})
+				}
+			});
+		});
+	});
+	function edit(uuid){
+		//弹出窗口
+		$("#editDlg").dialog('open');
+		//清空表
+		$("#editForm").form("clear");
+		//加载数据
+		$("#editForm").form("load","http://localhost:9090/erp/returnordersAction_getData?id=" + uuid);
+	}
+	
+	
+	function del(uuid){
+		$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+			if (r){    
+				$.ajax({
+					url:"http://localhost:9090/erp/returnordersAction_delete",
+					data:{"t.uuid":uuid},
+					success:function(rtn){
+						$.messager.alert("提示",rtn.message,"info",function(){
+							//刷新表格数据
+							$("#grid").datagrid("reload");
+						});
+					}
+				});  
+			}    
+		});  
+	}
+	
+	
+</script>
+</head>
+<body>
+	<div class="easyui-panel" style="padding-left: 4px;border-bottom: 2px;"></div>
+	<div style="height: 2px;"></div>
+	<form id="searchForm">
+		<table>
+			<tr>
+				<td>
+					生成日期：
+				</td>
+				<td>
+					<input type="text" name="t1.createtime" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					检查日期：
+				</td>
+				<td>
+					<input type="text" name="t1.checktime" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					结束日期：
+				</td>
+				<td>
+					<input type="text" name="t1.endtime" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					订单类型：
+				</td>
+				<td>
+					<input type="text" name="t1.type" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					下单员：
+				</td>
+				<td>
+					<input type="text" name="t1.creater" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					审核员工编号：
+				</td>
+				<td>
+					<input type="text" name="t1.checker" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					库管员：
+				</td>
+				<td>
+					<input type="text" name="t1.ender" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					供应商及客户编号：
+				</td>
+				<td>
+					<input type="text" name="t1.supplieruuid" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					合计金额：
+				</td>
+				<td>
+					<input type="text" name="t1.totalmoney" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					订单状态：
+				</td>
+				<td>
+					<input type="text" name="t1.state" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					运单号：
+				</td>
+				<td>
+					<input type="text" name="t1.waybillsn" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					原订单编号：
+				</td>
+				<td>
+					<input type="text" name="t1.ordersuuid" />
+				</td>
+			</tr>
+		</table>
+		<button id="btnSearch" type="button">查询</button>
+	</form>
+	<table id="grid"></table>
+	<div id="addDlg" style="display: none;">
+		<form id="addForm">
+			<table>
+				<tr>
+					<td>
+						生成日期：
+					</td>
+					<td>
+						<input type="text" name="t.createtime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						检查日期：
+					</td>
+					<td>
+						<input type="text" name="t.checktime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						结束日期：
+					</td>
+					<td>
+						<input type="text" name="t.endtime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						订单类型：
+					</td>
+					<td>
+						<input type="text" name="t.type" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						下单员：
+					</td>
+					<td>
+						<input type="text" name="t.creater" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						审核员工编号：
+					</td>
+					<td>
+						<input type="text" name="t.checker" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						库管员：
+					</td>
+					<td>
+						<input type="text" name="t.ender" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						供应商及客户编号：
+					</td>
+					<td>
+						<input type="text" name="t.supplieruuid" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						合计金额：
+					</td>
+					<td>
+						<input type="text" name="t.totalmoney" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						订单状态：
+					</td>
+					<td>
+						<input type="text" name="t.state" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						运单号：
+					</td>
+					<td>
+						<input type="text" name="t.waybillsn" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						原订单编号：
+					</td>
+					<td>
+						<input type="text" name="t.ordersuuid" />
+					</td>
+				</tr>
+				<tr>
+					<td><button id="btnSave" type="button">保存</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="editDlg" style="display: none;">
+		<form id="editForm">
+			<table>
+				<input type="hidden" name="t.uuid" />
+				<tr>
+					<td>
+						生成日期：
+					</td>
+					<td>
+						<input type="text" name="t.createtime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						检查日期：
+					</td>
+					<td>
+						<input type="text" name="t.checktime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						结束日期：
+					</td>
+					<td>
+						<input type="text" name="t.endtime" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						订单类型：
+					</td>
+					<td>
+						<input type="text" name="t.type" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						下单员：
+					</td>
+					<td>
+						<input type="text" name="t.creater" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						审核员工编号：
+					</td>
+					<td>
+						<input type="text" name="t.checker" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						库管员：
+					</td>
+					<td>
+						<input type="text" name="t.ender" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						供应商及客户编号：
+					</td>
+					<td>
+						<input type="text" name="t.supplieruuid" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						合计金额：
+					</td>
+					<td>
+						<input type="text" name="t.totalmoney" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						订单状态：
+					</td>
+					<td>
+						<input type="text" name="t.state" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						运单号：
+					</td>
+					<td>
+						<input type="text" name="t.waybillsn" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						原订单编号：
+					</td>
+					<td>
+						<input type="text" name="t.ordersuuid" />
+					</td>
+				</tr>
+				<tr>
+					<td><button id="btnEdit" type="button">修改</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+	<class name="com.wj.erp.entity.Returnorders" table="returnorders">
+		<id name="uuid">
+			<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
+				<param name="sequence_name">returnorders_seq</param>
+			</generator>
+		</id>
+		<property name="createtime" />
+		<property name="checktime" />
+		<property name="endtime" />
+		<property name="type" />
+		<property name="creater" />
+		<property name="checker" />
+		<property name="ender" />
+		<property name="supplieruuid" />
+		<property name="totalmoney" />
+		<property name="state" />
+		<property name="waybillsn" />
+		<property name="ordersuuid" />
+	</class>
+</hibernate-mapping>
