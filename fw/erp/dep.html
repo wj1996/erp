@@ -134,7 +134,7 @@
 			if (r){    
 				$.ajax({
 					url:"http://localhost:9090/erp/depAction_delete",
-					data:{"dep.uuid":uuid},
+					data:{"t.uuid":uuid},
 					dataType:"jsonp",
 					jsonp:"callback",
 					jsonpCallback:"callback",
@@ -161,7 +161,7 @@
 		$.ajax({
 			async:false,
 			url:"http://localhost:9090/erp/depAction_getData",
-			data:{"dep.uuid":uuid},
+			data:{"id":uuid},
 			type:"get",
 			dataType:"jsonp",
 			jsonp:"callback",
@@ -172,27 +172,6 @@
 			}
 		});
 	}
-	
-	
-	function checkAccount3(){
-		var result = 1;
-		$.ajax({
-			url : 'http://localhost:9090/erp/depAction_getData',
-			type : "post",
-			data : {},
-			async : false,
-			dataType:"jsonp",
-			jsonp:"callback",
-			jsonpCallback:"callback",
-			success : function(data) {
-				result = 2;
-			}
-		});
-		return result;
-	}
-
-	
-	
 	
 </script>
 </head>
@@ -206,7 +185,7 @@
 					部门名称：
 				</td>
 				<td>
-					<input type="text" name="dep1.name" />
+					<input type="text" name="t1.name" />
 				</td>
 			</tr>
 			<tr>
@@ -214,7 +193,7 @@
 					部门联系电话：
 				</td>
 				<td>
-					<input type="text" name="dep1.tele" />
+					<input type="text" name="t1.tele" />
 				</td>
 			</tr>
 		</table>
@@ -229,7 +208,7 @@
 						部门名称：
 					</td>
 					<td>
-						<input type="text" name="dep.name" />
+						<input type="text" name="t.name" />
 					</td>
 				</tr>
 				<tr>
@@ -237,7 +216,7 @@
 						部门联系电话：
 					</td>
 					<td>
-						<input type="text" name="dep.tele" />
+						<input type="text" name="t.tele" />
 					</td>
 				</tr>
 				<tr>
@@ -249,13 +228,13 @@
 	<div id="editDlg" style="display: none;">
 		<form id="editForm">
 			<table>
-				<input type="hidden" name="dep.uuid" />
+				<input type="hidden" name="t.uuid" />
 				<tr>
 					<td>
 						部门名称：
 					</td>
 					<td>
-						<input type="text" name="dep.name" />
+						<input type="text" name="t.name" />
 					</td>
 				</tr>
 				<tr>
@@ -263,7 +242,7 @@
 						部门联系电话：
 					</td>
 					<td>
-						<input type="text" name="dep.tele" />
+						<input type="text" name="t.tele" />
 					</td>
 				</tr>
 				<tr>

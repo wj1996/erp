@@ -17,26 +17,26 @@ import com.wj.erp.entity.PageBean;
 
 public class BaseAction<T> {
 
-	private IBaseBiz baseBiz;
+	private IBaseBiz<T> baseBiz;
 	private T t1;
-	private T t2; //用来承载多余的变量
-	//定义分页相关变量,page代表第几页，rows代表一页有几行
+	private T t2; // 用来承载多余的变量
+	// 定义分页相关变量,page代表第几页，rows代表一页有几行
 	private Integer page;
 	private Integer rows;
 	private Object param;
 
-	public void setDepBiz(IDepBiz baseBiz) {
+	public void setBaseBiz(IBaseBiz<T> baseBiz) {
 		this.baseBiz = baseBiz;
 	}
-	
+
 	public T getT1() {
 		return t1;
 	}
-	
+
 	public void setT1(T t1) {
 		this.t1 = t1;
 	}
-	
+
 	public void setPage(Integer page) {
 		this.page = page;
 	}
@@ -44,17 +44,17 @@ public class BaseAction<T> {
 	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
-	
+
 	public void setParam(Object param) {
 		this.param = param;
 	}
 
 	public void getList() {
-		List<T> list = baseBiz.getList(t1,t2,param);
+		List<T> list = baseBiz.getList(t1, t2, param);
 		String jsonString = JSON.toJSONString(list);
 		this.write(jsonString);
 	}
-	
+
 	public T getT2() {
 		return t2;
 	}
@@ -67,93 +67,135 @@ public class BaseAction<T> {
 	 * 分页查询
 	 */
 	public void getListByPage() {
-		PageBean<T> pageBean = baseBiz.getListByPage(t1,t2,param,page,rows);
+		PageBean<T> pageBean = baseBiz.getListByPage(t1, t2, param, page, rows);
 		System.out.println(JSON.toJSONString(pageBean));
-		Map<String,Object> jsonMap = new HashMap<>();
+		Map<String, Object> jsonMap = new HashMap<>();
 		jsonMap.put("rows", pageBean.getList());
 		jsonMap.put("total", pageBean.getTotalSize());
 //		jsonMap.put("total", 15);
 		this.write(JSON.toJSONString(jsonMap));
 //		this.write(JSON.toJSONString(pageBean.getList()));
 	}
-	
 
 	public void list() {
 		List<T> list = baseBiz.getList();
 		String jsonString = JSON.toJSONString(list);
 		this.write(jsonString);
 	}
-	
+
 	public void write(String jsonString) {
 		try {
 			String jsonp = ServletActionContext.getRequest().getParameter("callback");
 			HttpServletResponse response = ServletActionContext.getResponse();
+			//跨域设置（IE10以下版本无法使用）
 //			response.addHeader("Access-Control-Allow-Origin", "*");
 			response.setContentType("text/json;charset=utf-8");
-			if(StringUtils.isNotBlank(jsonp)) {
-				response.getWriter().write(jsonp + "(" + jsonString + ")");	
-			}else {
-				response.getWriter().write(jsonString);	
+			if (StringUtils.isNotBlank(jsonp)) {
+				response.getWriter().write(jsonp + "(" + jsonString + ")");
+			} else {
+				response.getWriter().write(jsonString);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * 新增
 	 */
 	private T t;
-	
+
 	public T getT() {
 		return t;
 	}
 
-	public void setT(T T) {
+	public void setT(T t) {
 		this.t = t;
 	}
 
 	public void add() {
-		Map<String,Object> rtn = new HashMap<String,Object>();
 		try {
 			baseBiz.add(t);
-			rtn.put("success", true);
-			rtn.put("message", "保存成功");
+			this.ajaxReturn(true, "增加成功");
 		} catch (Exception e) {
-			rtn.put("success", false);
-			rtn.put("message", "保存失败");
+			e.printStackTrace();
+			this.ajaxReturn(false, "增加失败");
 		}
-		
-		this.write(JSON.toJSONString(rtn));
+
 	}
-	
+
 	/**
 	 * 删除方法
 	 */
 	public void delete() {
-		Map<String,Object> rtn = new HashMap<String,Object>();
 		try {
 			baseBiz.delete(t);
-			rtn.put("success", true);
-			rtn.put("message", "删除成功");
+			this.ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
-			rtn.put("success", false);
-			rtn.put("message", "删除失败");
+			e.printStackTrace();
+			this.ajaxReturn(true, "删除失败");
 		}
-		
-		this.write(JSON.toJSONString(rtn));
+
 	}
+
+	private Long id;
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Long getId() {
+		return this.id;
+	}
+	
 	
 	public void getData() {
-		//子类具体实现
+		T tt = baseBiz.get(id);
+		String jsonString = JSON.toJSONStringWithDateFormat(tt, "yyyyMMdd");
+		System.out.println(jsonString);
+		this.write(mapData(jsonString, "t"));
 	}
-	
+
 	/**
 	 * 修改方法
 	 */
 	public void update() {
-		//子类实现
+		try {
+			baseBiz.update(t);
+			this.ajaxReturn(true, "修改成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.ajaxReturn(false, "修改失败");
+		}
+	}
+	
+	/**
+	 * 返回前端操作结果
+	 */
+	public void ajaxReturn(boolean success,String message) {
+		Map<String,Object> rtn = new HashMap<>();
+		rtn.put("success", success);
+		rtn.put("message", message);
+		this.write(JSON.toJSONString(rtn));
+	}
+	
+	/**
+	 * 转换
+	 */
+	public String mapData(String jsonString,String prefix) {
+		Map<String,Object> map = JSON.parseObject(jsonString);
+		Map<String,Object> rtn = new HashMap<>();
+		for(String key:map.keySet()) {
+			if(map.get(key) instanceof Map) {
+				Map<String,Object> m2 = (Map<String, Object>) map.get(key);
+				for(String key2:m2.keySet()) {
+					rtn.put(prefix + "." + key2, m2.get(key2));
+				}
+			}else {
+				rtn.put(prefix + "." + key, map.get(key));
+			}
+		}
+		
+		return JSON.toJSONString(rtn);
 	}
 }

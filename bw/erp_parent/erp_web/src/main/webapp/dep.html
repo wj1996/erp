@@ -19,12 +19,19 @@
 				{field:'tele',title:'部门联系电话',width:100,align:'right'},
 				{field:'-',title:'操作',formatter:function(value,row,index){
 					var opr = "<a href='javascript:void(0)' onclick='edit(" + row.uuid + ")'>修改</a>";
-					opr += " <a href='javascript:void(0)' onclick='delete(" + row.uuid + ")'>删除</a>";
+					opr += " <a href='javascript:void(0)' onclick='del(" + row.uuid + ")'>删除</a>";
 					return opr;
 				}}
 			]],
 			singletSelect:true,
-			pagination: true
+			pagination: true,
+			toolbar:[{
+				text:'新增',
+				iconCls:'icon-add',
+				handler:function(){
+					$("#addDlg").dialog("open");
+				}
+			}]
 		});	
 		$("#btnSearch").bind("click",function(){
 			//把表单数据转换成JSON对象
@@ -60,31 +67,64 @@
 			closed:true,//窗口是否为关闭状体,true表示关闭
 			modal:true
 		});
+		
+		$("#btnSave").bind("click",function(){
+			var formData = $("#addForm").serializeJSON();
+			$.ajax({
+				url:"http://localhost:9090/erp/depAction_add",
+				data:formData,
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,"info",function(){
+						//成功的话,关闭窗口
+						$("#addDlg").dialog("close");
+						//刷新表格数据
+						$("#grid").datagrid("reload");
+					});
+				}
+			});
+		});
+		$("#btnEdit").bind("click",function(){
+			var formData = $("#editForm").serializeJSON();
+			$.ajax({
+				url:"http://localhost:9090/erp/depAction_update",
+				data:formData,
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,"info",function(){
+						//成功的话,关闭窗口
+						$("#editDlg").dialog("close");
+						//刷新表格数据
+						$("#grid").datagrid("reload");
+					})
+				}
+			});
+		});
 	});
 	function edit(uuid){
 		//弹出窗口
 		$("#editDlg").dialog('open');
 		//清空表
 		$("#editForm").form("clear");
-		var data = getData(uuid);
 		//加载数据
-		$("#editForm").form("load",);
+		$("#editForm").form("load","http://localhost:9090/erp/depAction_getData?id=" + uuid);
 	}
 	
-	function getData(uuid){
-		var data = {};
-		$.ajax({
-			async:false,
-			url:"http://localhost:9090/erp/depAction_getData",
-			data:{"dep.uuid":uuid},
-			type:"get",
-			success:function(rtn){
-				data = rtn;
-			}
-		});
-		return data;
-	}
 	
+	function del(uuid){
+		$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+			if (r){    
+				$.ajax({
+					url:"http://localhost:9090/erp/depAction_delete",
+					data:{"t.uuid":uuid},
+					success:function(rtn){
+						$.messager.alert("提示",rtn.message,"info",function(){
+							//刷新表格数据
+							$("#grid").datagrid("reload");
+						});
+					}
+				});  
+			}    
+		});  
+	}
 	
 	
 </script>
@@ -99,7 +139,7 @@
 					部门名称：
 				</td>
 				<td>
-					<input type="text" name="dep1.name" />
+					<input type="text" name="t1.name" />
 				</td>
 			</tr>
 			<tr>
@@ -107,7 +147,7 @@
 					部门联系电话：
 				</td>
 				<td>
-					<input type="text" name="dep1.tele" />
+					<input type="text" name="t1.tele" />
 				</td>
 			</tr>
 		</table>
@@ -122,7 +162,7 @@
 						部门名称：
 					</td>
 					<td>
-						<input type="text" name="dep.name" />
+						<input type="text" name="t.name" />
 					</td>
 				</tr>
 				<tr>
@@ -130,7 +170,7 @@
 						部门联系电话：
 					</td>
 					<td>
-						<input type="text" name="dep.tele" />
+						<input type="text" name="t.tele" />
 					</td>
 				</tr>
 				<tr>
@@ -142,12 +182,13 @@
 	<div id="editDlg" style="display: none;">
 		<form id="editForm">
 			<table>
+				<input type="hidden" name="t.uuid" />
 				<tr>
 					<td>
 						部门名称：
 					</td>
 					<td>
-						<input type="text" name="dep.name" />
+						<input type="text" name="t.name" />
 					</td>
 				</tr>
 				<tr>
@@ -155,11 +196,11 @@
 						部门联系电话：
 					</td>
 					<td>
-						<input type="text" name="dep.tele" />
+						<input type="text" name="t.tele" />
 					</td>
 				</tr>
 				<tr>
-					<td><button id="btnSave" type="button">保存</button></td>
+					<td><button id="btnEdit" type="button">保存</button></td>
 				</tr>
 			</table>
 		</form>
