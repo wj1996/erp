@@ -9,4 +9,6 @@ import com.wj.erp.entity.Emp;
  */
 public interface IEmpBiz extends IBaseBiz<Emp>{
 
+	
+	Emp getByUsernameAndPwd(String username,String pwd);
 }

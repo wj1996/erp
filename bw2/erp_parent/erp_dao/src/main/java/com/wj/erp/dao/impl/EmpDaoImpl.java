@@ -1,5 +1,7 @@
 package com.wj.erp.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -43,6 +45,16 @@ public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
 		
 		
 		return dc;
+	}
+
+	@Override
+	public Emp getByUsernameAndPwd(String username, String pwd) {
+		String hql = "from Emp where username = ?0 and pwd = ?1";
+		List<Emp> list = (List<Emp>) this.getHibernateTemplate().find(hql, username,pwd);
+		if(null != list && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 

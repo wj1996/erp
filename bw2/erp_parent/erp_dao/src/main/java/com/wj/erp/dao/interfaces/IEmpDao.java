@@ -10,4 +10,6 @@ import com.wj.erp.entity.Emp;
  */
 public interface IEmpDao extends IBaseDao<Emp>{
 
+	
+	Emp getByUsernameAndPwd(String username,String pwd);
 }

@@ -20,6 +20,11 @@ public class EmpBizImpl extends BaseBizImpl<Emp> implements IEmpBiz{
 		super.setBaseDao(empDao);
 	}
 
+	@Override
+	public Emp getByUsernameAndPwd(String username, String pwd) {
+		return empDao.getByUsernameAndPwd(username, pwd);
+	}
+
 	
 
 }
