@@ -1,5 +1,6 @@
 package com.wj.erp.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.wj.erp.biz.interfaces.IEmpBiz;
 import com.wj.erp.entity.Emp;
 /**
@@ -46,4 +47,6 @@ public class EmpAction extends BaseAction<Emp> {
 			ajaxReturn(false,"请先登录!");
 		}
 	}
+	
+	
 }

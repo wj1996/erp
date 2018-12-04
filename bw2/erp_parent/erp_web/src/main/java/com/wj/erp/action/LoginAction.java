@@ -57,7 +57,7 @@ public class LoginAction {
 	public void showName() {
 		Emp emp = (Emp) ActionContext.getContext().getSession().get("loginUser");
 		if(null != emp) {
-			ajaxReturn(true,null);
+			ajaxReturn(true,emp.getUsername());
 		}else {
 			ajaxReturn(false,"");
 		}

@@ -337,7 +337,7 @@ function openPwd() {
         shadow: true,
         closed: true,
         align:"center",
-        height: 160,
+        height: 170,
         resizable:false,
     });
 }
