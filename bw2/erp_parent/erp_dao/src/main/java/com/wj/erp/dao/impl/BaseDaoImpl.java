@@ -115,6 +115,12 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T>{
 	public T getById(Long id) {
 		return this.getHibernateTemplate().get(entityClass, id);
 	}
+	
+	
+	public T getById(String id) {
+		return this.getHibernateTemplate().get(entityClass, id);
+	}
+	
 
 	@Override
 	public void update(T t) {

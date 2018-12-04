@@ -2,6 +2,7 @@ package com.wj.erp.dao.impl;
 
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -15,7 +16,7 @@ import com.wj.erp.entity.Emp;
  *
  */
 public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
-
+	
 	/**
 	 * 查询公共代码抽取
 	 * @param emp
@@ -55,6 +56,14 @@ public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
 			return list.get(0);
 		}
 		return null;
+	}
+	
+	
+
+	@Override
+	public void updatePwd(Long uuid, String pwd) {
+		String hql = "update Emp set pwd = ? where uuid = ?";
+		this.getHibernateTemplate().bulkUpdate(hql, pwd,uuid);
 	}
 
 

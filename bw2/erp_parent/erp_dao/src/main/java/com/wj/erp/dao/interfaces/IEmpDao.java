@@ -12,4 +12,6 @@ public interface IEmpDao extends IBaseDao<Emp>{
 
 	
 	Emp getByUsernameAndPwd(String username,String pwd);
+	
+	void updatePwd(Long uuid,String pwd);
 }

@@ -12,8 +12,10 @@ import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.opensymphony.xwork2.ActionContext;
 import com.wj.erp.biz.interfaces.IBaseBiz;
 import com.wj.erp.biz.interfaces.IDepBiz;
+import com.wj.erp.entity.Emp;
 import com.wj.erp.entity.PageBean;
 
 public class BaseAction<T> {
@@ -201,5 +203,9 @@ public class BaseAction<T> {
 		}
 		
 		return JSON.toJSONString(rtn);
+	}
+	
+	public Emp getLoginUser() {
+		return (Emp) ActionContext.getContext().getSession().get("loginUser");
 	}
 }

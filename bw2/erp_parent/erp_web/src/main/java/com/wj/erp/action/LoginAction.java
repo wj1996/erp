@@ -54,6 +54,16 @@ public class LoginAction {
 		}
 	}
 	
+	public void showName() {
+		Emp emp = (Emp) ActionContext.getContext().getSession().get("loginUser");
+		if(null != emp) {
+			ajaxReturn(true,null);
+		}else {
+			ajaxReturn(false,"");
+		}
+	}
+	
+	
 	/**
 	 * 返回前端操作结果
 	 */

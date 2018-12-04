@@ -19,4 +19,6 @@ public interface IBaseBiz<T> {
 	T get(Long id);
 
 	void update(T t);
+	
+	T get(String id);
 }

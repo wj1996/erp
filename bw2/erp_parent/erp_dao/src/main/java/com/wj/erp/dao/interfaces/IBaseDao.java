@@ -20,4 +20,6 @@ public interface IBaseDao<T> {
 	T getById(Long id);
 
 	void update(T t);
+	
+	T getById(String id);
 }

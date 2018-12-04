@@ -32,8 +32,8 @@ $(function(){
 	$.ajax({
 		async:false,
 		url:"menuAction_getMenuTree",
-		dataType:"json",
-		data:{'id':"0"},
+		dataType:"post",
+		data:"{'id':'0'}",
 		success:function(rtn){
 			_menus = rtn;
 		}
@@ -336,8 +336,9 @@ function openPwd() {
         modal: true,
         shadow: true,
         closed: true,
+        align:"center",
         height: 160,
-        resizable:false
+        resizable:false,
     });
 }
 //关闭登录窗口

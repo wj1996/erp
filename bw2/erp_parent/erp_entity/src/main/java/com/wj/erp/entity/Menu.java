@@ -1,6 +1,7 @@
 package com.wj.erp.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单
@@ -13,8 +14,17 @@ public class Menu implements Serializable{
 	private String menuname; //菜单名称
 	private String icon; //图标
 	private String url; //URL
-	private String pid; //上级菜单ID
+//	private String pid; //上级菜单ID
 	
+	private List<Menu> menus;
+	
+	
+	public List<Menu> getMenus() {
+		return menus;
+	}
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
+	}
 	public String getMenuid() {
 		return menuid;
 	}
@@ -43,11 +53,11 @@ public class Menu implements Serializable{
 		this.url = url;
 	}
 	
-	public String getPid() {
+	/*public String getPid() {
 		return pid;
 	}
 	public void setPid(String pid) {
 		this.pid = pid;
-	}
+	}*/
 	
 }

@@ -67,5 +67,10 @@ public class BaseBizImpl<T> implements IBaseBiz<T>{
 	public void update(T t) {
 		baseDao.update(t);
 	}
+
+	@Override
+	public T get(String id) {
+		return baseDao.getById(id);
+	}
 	
 }
