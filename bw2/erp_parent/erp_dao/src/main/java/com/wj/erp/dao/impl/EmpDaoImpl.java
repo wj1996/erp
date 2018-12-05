@@ -62,7 +62,7 @@ public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
 
 	@Override
 	public void updatePwd(Long uuid, String pwd) {
-		String hql = "update Emp set pwd = ? where uuid = ?";
+		String hql = "update Emp set pwd = ?0 where uuid = ?1";
 		this.getHibernateTemplate().bulkUpdate(hql, pwd,uuid);
 	}
 

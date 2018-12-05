@@ -48,5 +48,14 @@ public class EmpAction extends BaseAction<Emp> {
 		}
 	}
 	
+	public void resetPwd() {
+		try {
+			empBiz.resetPwd(getId(),newPwd);
+			ajaxReturn(true,"重置密码成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			ajaxReturn(false,"重置密码失败");
+		}
+	}
 	
 }

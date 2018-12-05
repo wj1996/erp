@@ -357,9 +357,31 @@ function openPwd() {
         			return;
         		}
         		if(newPwd != rePwd){
-        			$.messager.alert("提示","密码不一致",'info');
+        			$.messager.alert("提示","确认密码不一致",'info');
         			return;
         		}
+        		
+        		$.ajax({
+        			url:"empAction_updatePwd",
+        			data:{"oldPwd":oldPwd,"newPwd":newPwd},
+        			dataType:"json",
+        			success:function(rtn){
+        				$.messager.alert("提示",rtn.message,"info",function(){
+        					if(rtn.success){
+        						$("#w").dialog('close');
+        						$("#oldPwd").val('');
+        						$("#newPwd").val('');
+        						$("#rePwd").val('');
+        					}
+        				})
+        			}
+        		})
+        	}
+        },{
+        	text:"关闭",
+        	iconCls:"icon-cancel",
+        	handler:function(){
+        		
         	}
         }]
     });

@@ -63,6 +63,10 @@ public class LoginAction {
 		}
 	}
 	
+	public void loginOut() {
+		ActionContext.getContext().getSession().remove("loginUser");
+	}
+	
 	
 	/**
 	 * 返回前端操作结果

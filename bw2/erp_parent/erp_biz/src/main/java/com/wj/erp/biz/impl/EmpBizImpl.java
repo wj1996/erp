@@ -26,7 +26,7 @@ public class EmpBizImpl extends BaseBizImpl<Emp> implements IEmpBiz{
 
 	@Override
 	public Emp getByUsernameAndPwd(String username, String pwd) {
-		return empDao.getByUsernameAndPwd(username, pwd);
+		return empDao.getByUsernameAndPwd(username, encrypt(pwd,username));
 	}
 
 	@Override
@@ -45,14 +45,23 @@ public class EmpBizImpl extends BaseBizImpl<Emp> implements IEmpBiz{
 	
 	@Override
 		public void add(Emp t) {
-			t.setPwd(encrypt(t.getPwd(), t.getUsername()));
+//			t.setPwd(encrypt(t.getPwd(), t.getUsername()));
+			//设置初始密码
+			t.setPwd(encrypt(t.getUsername(),t.getUsername()));
 			super.add(t);
 		}
 
 	private String encrypt(String source,String salt) {
 		//2：散列次数
 		Md5Hash md5 = new Md5Hash(source,salt,hashIteration);
+		System.out.println(md5.toString());
 		return md5.toString();
+	}
+
+	@Override
+	public void resetPwd(Long uuid, String newPwd) {
+		Emp emp = empDao.getById(uuid);
+		empDao.updatePwd(uuid, encrypt(newPwd,emp.getUsername()));
 	}
 	
 
