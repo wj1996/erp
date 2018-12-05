@@ -330,14 +330,38 @@ function msgShow(title, msgString, msgType) {
 
 //设置登录窗口
 function openPwd() {
-    $('#w').window({
+    $('#w').dialog({
         title: '修改密码',
         width: 300,
         modal: true,
-        shadow: true,
         closed: true,
-        height: 160,
-        resizable:false
+        height: 180,
+        resizable:false,
+        buttons:[{
+        	text:'保存',
+        	iconCls:'icon-save',
+        	handler:function(){
+        		var oldPwd = $("#oldPwd").val();
+        		var newPwd = $("#newPwd").val();
+        		var rePwd = $("#rePwd").val();
+        		if(oldPwd == ""){
+        			$.messager.alert("提示","原密码不能为空",'info');
+        			return;
+        		}
+        		if(newPwd == ""){
+        			$.messager.alert("提示","新密码不能为空",'info');
+        			return;
+        		}
+        		if(rePwd == ""){
+        			$.messager.alert("提示","确认密码不能为空",'info');
+        			return;
+        		}
+        		if(newPwd != rePwd){
+        			$.messager.alert("提示","密码不一致",'info');
+        			return;
+        		}
+        	}
+        }]
     });
 }
 //关闭登录窗口
