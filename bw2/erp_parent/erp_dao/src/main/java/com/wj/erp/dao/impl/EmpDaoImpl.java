@@ -36,6 +36,10 @@ public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
 			if(null != emp.getGender()) {
 				dc.add(Restrictions.eq("gender", emp.getGender()));
 			}
+			
+			if(null != emp.getUuid()) {
+				dc.add(Restrictions.eq("uuid", emp.getUuid()));
+			}
 		}
 		if(null != emp2) {
 			if(null != emp2.getBirthday()) {

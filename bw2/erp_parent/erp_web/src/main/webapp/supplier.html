@@ -9,18 +9,34 @@
 <script src="ui/jquery.easyui.min.js"></script>
 <script src="ui/locale/easyui-lang-zh_CN.js"></script>
 <script src="ui/jquery.serializejson.min.js"></script>
+<script src="ui/request.js"></script>
 <script type="text/javascript">
+
+
+	var listParam = "";
+	var saveParam = "";
+	if(Request['type'] == 1){
+		document.title = "供应商管理";
+		listParam = "?t1.type=1";
+		saveParam = "?t.type=1";
+	}
+	if(Request['type'] == 2){
+		document.title = "客户管理";
+		listParam = "?t1.type=2";
+		saveParam = "?t.type=2";
+	}
+
 	$(function(){
 		$('#grid').datagrid({
-			url:"supplierAction_getListByPage",
+			url:"supplierAction_getListByPage" + listParam,
 			columns:[[
-				{field:'uuid',title:'编号',width:100},
+				{field:'uuid',title:'编号',width:50},
 				{field:'name',title:'名称',width:100},
 				{field:'address',title:'联系地址',width:100},
 				{field:'contact',title:'联系人',width:100},
 				{field:'tele',title:'联系电话',width:100},
 				{field:'email',title:'邮件地址',width:100},
-				{field:'type',title:'1：供应商 2：客户',width:100},
+				/* {field:'type',title:'1：供应商 2：客户',width:200}, */
 				{field:'-',title:'操作',formatter:function(value,row,index){
 					var opr = "<a href='javascript:void(0)' onclick='edit(" + row.uuid + ")'>修改</a>";
 					opr += " <a href='javascript:void(0)' onclick='del(" + row.uuid + ")'>删除</a>";
@@ -59,7 +75,7 @@
 		$("#addDlg").dialog({
 			title:"增加供应商",
 			width:300,
-			height:200,
+			height:300,
 			closed:true,//窗口是否为关闭状体,true表示关闭
 			modal:true
 		});
@@ -67,7 +83,7 @@
 		$("#editDlg").dialog({
 			title:"修改供应商",
 			width:300,
-			height:200,
+			height:300,
 			closed:true,//窗口是否为关闭状体,true表示关闭
 			modal:true
 		});
@@ -75,7 +91,7 @@
 		$("#btnSave").bind("click",function(){
 			var formData = $("#addForm").serializeJSON();
 			$.ajax({
-				url:"http://localhost:9090/erp/supplierAction_add",
+				url:"http://localhost:9090/erp/supplierAction_add" + saveParam,
 				data:formData,
 				success:function(rtn){
 					$.messager.alert("提示",rtn.message,"info",function(){
@@ -178,14 +194,14 @@
 					<input type="text" name="t1.email" />
 				</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td>
 					1：供应商 2：客户：
 				</td>
 				<td>
 					<input type="text" name="t1.type" />
 				</td>
-			</tr>
+			</tr> -->
 		</table>
 		<button id="btnSearch" type="button">查询</button>
 	</form>
@@ -233,14 +249,14 @@
 						<input type="text" name="t.email" />
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td>
 						1：供应商 2：客户：
 					</td>
 					<td>
 						<input type="text" name="t.type" />
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td><button id="btnSave" type="button">保存</button></td>
 				</tr>
@@ -291,14 +307,14 @@
 						<input type="text" name="t.email" />
 					</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td>
 						1：供应商 2：客户：
 					</td>
 					<td>
 						<input type="text" name="t.type" />
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td><button id="btnEdit" type="button">修改</button></td>
 				</tr>

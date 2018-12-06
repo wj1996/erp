@@ -23,7 +23,9 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
 	public DetachedCriteria getDetachedCriteria(Supplier supplier,Supplier supplier2) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Supplier.class);
 		if(null != supplier) {
-			
+			if(null != supplier.getType()) {
+				dc.add(Restrictions.eq("type", supplier.getType()));
+			}
 		}
 		return dc;
 	}

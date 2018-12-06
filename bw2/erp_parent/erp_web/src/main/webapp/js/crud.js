@@ -21,6 +21,23 @@ $(function(){
 		h = height;
 	}
 	
+	$('#grid').datagrid({
+		url:name1 + "Action_getListByPage",
+		columns:columns,
+		singletSelect:true,
+		pagination: true,
+		toolbar:[{
+			text:'新增',
+			iconCls:'icon-add',
+			align:"center",
+			handler:function(){
+				$("#addDlg").dialog("open");
+			}
+		}]
+	});	
+	
+	
+	
 	$("#btnSearch").bind("click", function() {
 		// 把表单数据转换成JSON对象
 		var formData = $("#searchForm").serializeJSON();
@@ -103,7 +120,7 @@ function edit(uuid) {
 				$.ajax({
 					url : "http://localhost:9090/erp/" + name1 + "Action_delete",
 					data : {
-						"t.uuid" : uuid
+						"t.uuid" : uuid,
 					},
 					success : function(rtn) {
 						$.messager.alert("提示", rtn.message, "info", function() {
