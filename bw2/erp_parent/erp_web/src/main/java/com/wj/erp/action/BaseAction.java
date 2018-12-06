@@ -84,7 +84,8 @@ public class BaseAction<T> {
 
 	public void list() {
 		List<T> list = baseBiz.getList();
-		String jsonString = JSON.toJSONString(list);
+//		String jsonString = JSON.toJSONString(list);
+		String jsonString = JSON.toJSONString(list,SerializerFeature.DisableCircularReferenceDetect);
 		this.write(jsonString);
 	}
 
