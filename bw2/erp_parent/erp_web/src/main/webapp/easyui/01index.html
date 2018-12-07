@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>easyUI开始</title>
+<link rel="stylesheet" href="../ui/themes/default/easyui.css" />
+<link rel="stylesheet" href="../ui/themes/icon.css" />
+<script src="../ui/jquery.min.js"></script>
+<script src="../ui/jquery.easyui.min.js"></script>
+<script src="../ui/locale/easyui-lang-zh_CN.js"></script>
+<style>
+	#mainwindow{
+		width:500px;
+		height:300px;
+		background:#fafafa;
+		overflow:hidden;
+	}
+</style>
+<script>
+	function clearAll(){
+		alert("clearAll");
+	}
+</script>
+</head>
+<body>
+	<div class="EasyUI-window" id="mainwindow" title="登录" border="false" resizable="false",draggable="false",minimizable="false",maximizable="false">
+		<div id="loginForm">
+			<table cellpadding="0" cellspacing="3">
+				<tr>
+					<td>登录账号</td>
+					<td>
+						<input type="text" id="username" />
+					</td>
+				</tr>
+				<tr>
+					<td>登录密码</td>
+					<td>
+						<input type="password" id="password" />
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<a id="btnLogin" class="EasyUI-linkbutton">登录</a>
+						<a class="EasyUI-linkbutton" onClick="clearAll()">重置</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
