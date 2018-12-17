@@ -1,6 +1,7 @@
 package com.wj.erp.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 订单
@@ -20,10 +21,20 @@ public class Orders implements Serializable{
 	private Long starter; //采购员
 	private Long ender; //库管员
 	private Long supplieruuid; //供应商或客户
-	private Long totalmoney; //合计金额
+	private Double totalmoney; //合计金额
 	private String state; //采购: 0:未审核 1:已审核, 2:已确认, 3:已入库；销售：0:未出库 1:已出库
 	private Long waybillsn; //运单号
 	
+	
+	private List<Orderdetail> orderDetails;
+	
+	
+	public List<Orderdetail> getOrderDetails() {
+		return orderDetails;
+	}
+	public void setOrderDetails(List<Orderdetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 	public Long getUuid() {
 		return uuid;
 	}
@@ -101,13 +112,14 @@ public class Orders implements Serializable{
 		this.supplieruuid = supplieruuid;
 	}
 	
-	public Long getTotalmoney() {
+	
+	
+	public Double getTotalmoney() {
 		return totalmoney;
 	}
-	public void setTotalmoney(Long totalmoney) {
+	public void setTotalmoney(Double totalmoney) {
 		this.totalmoney = totalmoney;
 	}
-	
 	public String getState() {
 		return state;
 	}

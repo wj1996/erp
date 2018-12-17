@@ -12,15 +12,23 @@ public class Orderdetail implements Serializable{
 	private Long uuid; //编号
 	private Long goodsuuid; //商品编号
 	private String goodsname; //商品名称
-	private Long price; //价格
+	private Double price; //价格
 	private Long num; //数量
-	private Long money; //金额
+	private Double money; //金额
 	private java.util.Date endtime; //结束日期
 	private Long ender; //库管员
 	private Long storeuuid; //仓库编号
 	private String state; //采购：0=未入库，1=已入库  销售：0=未出库，1=已出库
-	private Long ordersuuid; //订单编号
+//	private Long ordersuuid; //订单编号
 	
+	private Orders orders;
+	
+	public Orders getOrders() {
+		return orders;
+	}
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
 	public Long getUuid() {
 		return uuid;
 	}
@@ -42,12 +50,6 @@ public class Orderdetail implements Serializable{
 		this.goodsname = goodsname;
 	}
 	
-	public Long getPrice() {
-		return price;
-	}
-	public void setPrice(Long price) {
-		this.price = price;
-	}
 	
 	public Long getNum() {
 		return num;
@@ -56,13 +58,19 @@ public class Orderdetail implements Serializable{
 		this.num = num;
 	}
 	
-	public Long getMoney() {
+	
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public Double getMoney() {
 		return money;
 	}
-	public void setMoney(Long money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
-	
 	public java.util.Date getEndtime() {
 		return endtime;
 	}
@@ -91,11 +99,5 @@ public class Orderdetail implements Serializable{
 		this.state = state;
 	}
 	
-	public Long getOrdersuuid() {
-		return ordersuuid;
-	}
-	public void setOrdersuuid(Long ordersuuid) {
-		this.ordersuuid = ordersuuid;
-	}
 	
 }

@@ -14,8 +14,8 @@ public class Goods implements Serializable{
 	private String origin; //产地
 	private String producer; //厂家
 	private String unit; //计量单位
-	private Long inprice; //进货价格
-	private Long outprice; //销售价格
+	private Double inprice; //进货价格
+	private Double outprice; //销售价格
 	/*private Long goodstypeuuid; //商品类型
 */	
 	private Goodstype goodsType;
@@ -61,20 +61,19 @@ public class Goods implements Serializable{
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
-	public Long getInprice() {
+	public Double getInprice() {
 		return inprice;
 	}
-	public void setInprice(Long inprice) {
+	public void setInprice(Double inprice) {
 		this.inprice = inprice;
 	}
-	
-	public Long getOutprice() {
+	public Double getOutprice() {
 		return outprice;
 	}
-	public void setOutprice(Long outprice) {
+	public void setOutprice(Double outprice) {
 		this.outprice = outprice;
 	}
+	
 	
 	/*public Long getGoodstypeuuid() {
 		return goodstypeuuid;

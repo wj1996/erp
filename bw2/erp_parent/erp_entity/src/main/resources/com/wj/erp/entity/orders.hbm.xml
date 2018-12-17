@@ -21,5 +21,12 @@
 		<property name="totalmoney" />
 		<property name="state" />
 		<property name="waybillsn" />
+		
+		<!-- 级联更新 -->
+		<bag name="orderDetails" cascade="save-update" inverse="true">
+			<key column="ordersuuid" />
+			<one-to-many class="com.wj.erp.entity.Orderdetail" />
+		</bag>
+		
 	</class>
 </hibernate-mapping>
