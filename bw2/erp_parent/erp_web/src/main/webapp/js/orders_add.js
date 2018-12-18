@@ -6,7 +6,7 @@ var existEditIndex = -1;
 $(function(){
 	$("#grid").datagrid({
 		columns:[[
-			{field:'uuid',title:'商品编号',width:100,editor:{
+			{field:'goodsuuid',title:'商品编号',width:100,editor:{
 				type:'numberbox',
 				options:{
 					disabled:true
@@ -21,7 +21,7 @@ $(function(){
 					onSelect:function(good){
 						console.log(good);
 						//获取编辑器
-						var edi = getEditor("uuid");
+						var edi = getEditor("goodsuuid");
 						//target,指向真正使用element
 //						$(edi.target).val(good.goodsuuid); //这样写不生效，原因未知
 						$(edi.target).numberbox("setValue",good.uuid);

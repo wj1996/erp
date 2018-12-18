@@ -17,10 +17,15 @@ public class Orders implements Serializable{
 	private java.util.Date endtime; //入库或出库日期
 	private String type; //1:采购 2:销售
 	private Long creater; //下单员
+	private String createrName; //下单员名称
 	private Long checker; //审核员
+	private String checkerName;
 	private Long starter; //采购员
+	private String starterName;
 	private Long ender; //库管员
+	private String enderName;
 	private Long supplieruuid; //供应商或客户
+	private String supplierName; //供用水或客户名称
 	private Double totalmoney; //合计金额
 	private String state; //采购: 0:未审核 1:已审核, 2:已确认, 3:已入库；销售：0:未出库 1:已出库
 	private Long waybillsn; //运单号
@@ -133,5 +138,36 @@ public class Orders implements Serializable{
 	public void setWaybillsn(Long waybillsn) {
 		this.waybillsn = waybillsn;
 	}
+	public String getCreaterName() {
+		return createrName;
+	}
+	public void setCreaterName(String createrName) {
+		this.createrName = createrName;
+	}
+	public String getCheckerName() {
+		return checkerName;
+	}
+	public void setCheckerName(String checkerName) {
+		this.checkerName = checkerName;
+	}
+	public String getStarterName() {
+		return starterName;
+	}
+	public void setStarterName(String starterName) {
+		this.starterName = starterName;
+	}
+	public String getEnderName() {
+		return enderName;
+	}
+	public void setEnderName(String enderName) {
+		this.enderName = enderName;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+	
 	
 }

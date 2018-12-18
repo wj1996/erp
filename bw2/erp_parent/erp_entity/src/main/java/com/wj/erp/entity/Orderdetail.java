@@ -2,6 +2,8 @@ package com.wj.erp.entity;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 订单明细
  * @author [author]
@@ -21,6 +23,8 @@ public class Orderdetail implements Serializable{
 	private String state; //采购：0=未入库，1=已入库  销售：0=未出库，1=已出库
 //	private Long ordersuuid; //订单编号
 	
+	/** 不设置会导致死循环 **/
+	@JSONField(serialize=false)
 	private Orders orders;
 	
 	public Orders getOrders() {
