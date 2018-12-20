@@ -1,5 +1,6 @@
 package com.wj.erp.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -24,6 +25,15 @@ public class OrderdetailDaoImpl extends BaseDaoImpl<Orderdetail> implements IOrd
 		DetachedCriteria dc = DetachedCriteria.forClass(Orderdetail.class);
 		if(null != orderdetail) {
 			
+			//根据订单状态查询
+			if(StringUtils.isNotBlank(orderdetail.getState())) {
+				dc.add(Restrictions.eq("state", orderdetail.getState()));
+			}
+			
+			//根据订单查询
+			if(null != orderdetail.getOrders() && null != orderdetail.getOrders().getUuid()) {
+				dc.add(Restrictions.eq("orders", orderdetail.getOrders()));
+			}
 		}
 		return dc;
 	}

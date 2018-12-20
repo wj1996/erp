@@ -50,5 +50,29 @@
 		</table>
 		<table id="itemgrid"></table>
 	</div>
+	<div id="itemDlg" style="padding:4px;">
+		<form id="itemForm">
+			<input type="hidden" name="id" id="itemuuid" />
+			<table class="hovertable">
+				<tr>
+					<td width="30%" class="bg">商品编号</td>
+					<td width="70%" id="goodsuuid"></td>
+				</tr>
+				<tr>
+					<td class="bg">商品名称</td>
+					<td id="goodsname"></td>
+				</tr>
+				<tr>
+					<td class="bg">数量</td>
+					<td id="goodsnum"></td>
+				</tr>
+				<tr>
+					<td class="bg">仓库</td>
+					<td><input name="storeuuid" class="easyui-combobox" data-options="
+						url:'storeAction_list',valueField:'uuid',textField:'name'" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>

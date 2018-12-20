@@ -14,6 +14,11 @@ $(function(){
 	}
 	
 	
+	if(Request['oper'] == 'doInStore'){
+		url += "&t1.state=2";
+	}
+	
+	
 	$('#grid').datagrid({
 		url:"ordersAction_getListByPage?t1.type=1",
 		columns:[[
@@ -100,6 +105,38 @@ $(function(){
 			]
 		});
 	}
+	
+	$("#itemDlg").dialog({
+		width:300,
+		height:200,
+		title:'入库',
+		modal:true,
+		closed:true,
+		buttons:[
+			{
+				text:'入库',
+				iconCls:'icon-save',
+				handler:doInStore
+			}
+		]
+	})
+	
+	/**
+	 * 入库
+	 */
+	if(Request['oper'] == 'doInStore'){
+		$("#itemgrid").datagrid({
+			onDblClickRow:function(rowIndex,rowData){
+				//提示数据
+				$("#itemuuid").val(rowData.uuid);
+				$("#goodsuuid").html(rowData.goodsuuid);
+				$("#goodsname").html(rowData.goodsname);
+				$("#goodsnum").html(rowData.num);
+				//打开入库窗口
+				$("#itemDlg").dialog('open');
+			}
+		});
+	}
 })
 /**
  * 日期格式化器
@@ -178,6 +215,58 @@ function doStart(){
 						//刷新表格
 						$("#grid").datagrid("reload");
 					})
+				}
+			})
+		}
+	})
+}
+/**
+ * 入库
+ * @returns
+ */
+function doInStore(){
+	var formdata = $("#itemForm").serializeJSON();
+	if(formdata.storeuuid == ''){
+		$.messager.alert("提示","请选择仓库！","info");
+		return;
+	}
+	
+	$.messager.confirm("确认","确认要入库吗？",function(yes){
+		if(yes){
+			$.ajax({
+				url:"orderdetailAction_doInStore",
+				data:formdata,
+				type:"post",
+				dataType:"json",
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,"info",function(){
+						if(rtn.success){
+							//关闭入库窗口
+							$("#itemDlg").dialog('close');
+							//刷新明细列
+							var row = $("#itemgrid").datagrid("getSelected");
+							console.log($("#itemgrid"));
+							var get = $("#itemgrid").datagrid("getSelections");
+							console.log(get);
+							$('#itemgrid').datagrid('getSelected').state = "1";
+							var data = $("#itemgrid").datagrid("getData");
+							//如果所有明细都入库了，应该关闭订单详情，并且刷新订单列表
+							var allDone = true;
+							$.each(data.rows,function(i,row){
+								if(row.state * 1 == 0){
+									allDone = false;
+									return false;
+								}
+							})
+							
+							if(allDone == true){
+								//关闭详情窗口
+								$("#ordersDlg").dialog("close");
+								//刷新订单列表
+								$("#grid").datagrid("reload");
+							}
+						}
+					})	
 				}
 			})
 		}

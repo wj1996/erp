@@ -12,7 +12,9 @@ import com.wj.erp.dao.interfaces.IOrderdetailDao;
 import com.wj.erp.dao.interfaces.IStoredetailDao;
 import com.wj.erp.dao.interfaces.IStoreoperDao;
 import com.wj.erp.entity.Orderdetail;
+import com.wj.erp.entity.Orders;
 import com.wj.erp.entity.Storedetail;
+import com.wj.erp.entity.Storeoper;
 /**
  * 订单明细业务逻辑层
  * @author [author]
@@ -56,12 +58,34 @@ public class OrderdetailBizImpl extends BaseBizImpl<Orderdetail> implements IOrd
 		storedetail.setStoreuuid(orderdetail.getStoreuuid());
 		List<Storedetail> list = storedetailDao.getList(storedetail, null, null);
 		if(null != list && list.size() > 0) {
-			list.get(0).setNum(list.get(0).getNum() + orderdetail.getNum());
+			list.get(0).setNum(list.get(0).getNum() == null ? 0 : list.get(0).getNum() + (orderdetail.getNum() == null ? 0 : orderdetail.getNum()));
 		}else {
 			storedetail.setNum(orderdetail.getNum());
 			storedetailDao.add(storedetail);
 		}
 		
+		//构建操作记录
+		Storeoper oper = new Storeoper();
+		oper.setEmpuuid(empuuid);
+		oper.setGoodsuuid(orderdetail.getGoodsuuid());
+		oper.setNum(orderdetail.getNum());
+		oper.setOpertime(orderdetail.getEndtime());
+		oper.setStoreuuid(storedetail.getUuid());
+		oper.setType(Constant.STOREOPER_TYPE_IN);
+		storeoperDao.add(oper);
+		
+		//查询订单下是否还存在状态为0的明细
+		Orderdetail queryParam = new Orderdetail();
+		Orders orders = orderdetail.getOrders();
+		queryParam.setOrders(orders);
+		queryParam.setState(Constant.STATE_NOT_IN);
+		Integer count = orderdetailDao.getCount(queryParam, null, null);
+		if(count == 0) {
+			//所有订单明细都入库了
+			orders.setState(Constant.STATE_END);
+			orders.setEndtime(orderdetail.getEndtime());
+			orders.setEnder(empuuid);
+		}
 	}
 
 	

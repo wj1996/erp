@@ -26,4 +26,8 @@ public class Constant {
 	/** 已入库 **/
 	public final static String STATE_IN = "1";
 	
+	//仓库状态
+	public final static String STOREOPER_TYPE_IN = "1";
+	public final static String STOREOPER_TYPE_OUT = "1";
+	
 }
