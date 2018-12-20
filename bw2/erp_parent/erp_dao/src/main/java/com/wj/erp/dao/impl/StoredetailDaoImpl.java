@@ -1,5 +1,6 @@
 package com.wj.erp.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -23,7 +24,12 @@ public class StoredetailDaoImpl extends BaseDaoImpl<Storedetail> implements ISto
 	public DetachedCriteria getDetachedCriteria(Storedetail storedetail,Storedetail storedetail2) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Storedetail.class);
 		if(null != storedetail) {
-			
+			if(null != storedetail.getStoreuuid()) {
+				dc.add(Restrictions.eq("storeuuid", storedetail.getStoreuuid()));
+			}
+			if(null != storedetail.getGoodsuuid()) {
+				dc.add(Restrictions.eq("goodsuuid", storedetail.getGoodsuuid()));
+			}
 		}
 		return dc;
 	}

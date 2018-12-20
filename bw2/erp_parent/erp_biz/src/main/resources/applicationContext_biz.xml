@@ -37,6 +37,8 @@
 	<!-- [comment] -->
 	<bean id="orderdetailBiz" class="com.wj.erp.biz.impl.OrderdetailBizImpl">
 		<property name="orderdetailDao" ref="orderdetailDao" />
+		<property name="storedetailDao" ref="storedetailDao" />
+		<property name="storeoperDao" ref="storeoperDao" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="ordersBiz" class="com.wj.erp.biz.impl.OrdersBizImpl">

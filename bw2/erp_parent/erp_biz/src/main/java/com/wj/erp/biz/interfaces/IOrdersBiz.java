@@ -15,4 +15,11 @@ public interface IOrdersBiz extends IBaseBiz<Orders>{
 	 * @param empUuid（员工编号）
 	 */
 	void doCheck(Long uuid,Long empUuid);
+	
+	/**
+	 * 确认
+	 * @param uuid（订单编号）
+	 * @param empUuid（采购员工编号）
+	 */
+	void doStart(Long uuid,Long empUuid);
 }

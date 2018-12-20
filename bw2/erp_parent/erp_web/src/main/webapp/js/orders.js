@@ -2,6 +2,18 @@
  * 
  */
 $(function(){
+	
+	var url = "ordersAction_getListByPage?t1.type=1";
+	//如果是审核业务，加上state=0，只查询未审核的订单
+	if(Request['oper'] == 'doCheck'){
+		url += "&t1.state=0";
+	}
+	
+	if(Request['oper'] == 'doStart'){
+		url += "&t1.state=1";
+	}
+	
+	
 	$('#grid').datagrid({
 		url:"ordersAction_getListByPage?t1.type=1",
 		columns:[[
@@ -58,6 +70,36 @@ $(function(){
 		fitColumns:true,
 		singletSelect:true
 	});
+	
+	//添加审核按钮
+	if(Request['oper'] == 'doCheck'){
+		$("#orderDlg").dialog({
+			toolbar:[
+				{
+					text:"审核",
+					iconCls:'icon-search',
+					handler:function(){
+						doCheck();
+					}
+				}
+			]
+		});
+	}
+	
+	//添加确认按钮
+	if(Request['oper'] == 'doStart'){
+		$("#orderDlg").dialog({
+			toolbar:[
+				{
+					text:"确认",
+					iconCls:'icon-search',
+					handler:function(){
+						doStart();
+					}
+				}
+			]
+		});
+	}
 })
 /**
  * 日期格式化器
@@ -93,4 +135,51 @@ function getDetailState(value){
 	case 1:return '已入库';
 	default:return '';
 	}
+}
+/**
+ * 审核
+ * @returns
+ */
+function doCheck(){
+	$.messager.confirm("确认","确认要审核吗？",function(yes){
+		if(yes){
+			$.ajax({
+				url:"ordersAction_doCheck?id=" + $("#uuid").html(),
+				dataType:"json",
+				type:"post",
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,'info',function(){
+						//关闭窗口
+						$("#orderDlg").dialog("close");
+						//刷新表格
+						$("#grid").datagrid("reload");
+					})
+				}
+			})
+		}
+	})
+}
+
+/**
+ * 确认
+ * @returns
+ */
+function doStart(){
+	$.messager.confirm("确认","确定要确认吗？",function(yes){
+		if(yes){
+			$.ajax({
+				url:"ordersAction_doStart?id=" + $("#uuid").html(),
+				dataType:"json",
+				type:"post",
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,'info',function(){
+						//关闭窗口
+						$("#orderDlg").dialog("close");
+						//刷新表格
+						$("#grid").datagrid("reload");
+					})
+				}
+			})
+		}
+	})
 }
