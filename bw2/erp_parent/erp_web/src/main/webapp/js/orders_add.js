@@ -4,7 +4,7 @@
 //当前编辑行
 var existEditIndex = -1;
 $(function(){
-	$("#grid").datagrid({
+	$("#ordersgrid").datagrid({
 		columns:[[
 			{field:'goodsuuid',title:'商品编号',width:100,editor:{
 				type:'numberbox',
@@ -61,16 +61,16 @@ $(function(){
 				handler:function(){
 					if(existEditIndex > -1){
 						//关闭编辑
-						$("#grid").datagrid("endEdit",existEditIndex);	
+						$("#ordersgrid").datagrid("endEdit",existEditIndex);	
 					}
 					//增加一行
-					$("#grid").datagrid("appendRow",{num:0,money:0});
+					$("#ordersgrid").datagrid("appendRow",{num:0,money:0});
 					//获取所有行记录
-					var rows = $("#grid").datagrid("getRows");
+					var rows = $("#ordersgrid").datagrid("getRows");
 					//设置当前编辑行的索引
 					existEditIndex = rows.length - 1;
 					//设置编辑器,才能开启编辑状态
-					$("#grid").datagrid("beginEdit",rows.length - 1);
+					$("#ordersgrid").datagrid("beginEdit",rows.length - 1);
 				}
 			},"-",{
 				text:"提交",
@@ -78,10 +78,10 @@ $(function(){
 				handler:function(){
 					//关闭编辑状态
 					if(existEditIndex > -1){
-						$("#grid").datagrid("endEdit",existEditIndex);
+						$("#ordersgrid").datagrid("endEdit",existEditIndex);
 					}
 					
-					var rows = $("#grid").datagrid("getRows");
+					var rows = $("#ordersgrid").datagrid("getRows");
 					if(rows.length == 0){
 						return;
 					}
@@ -99,7 +99,7 @@ $(function(){
 								//清空供应商
 								$("#supplier").combogrid("clear");
 								//清空表格
-								$("#grid").datagrid("loadData",{total:0,rows:[],footer:[{num:"合计",money:0}]});
+								$("#ordersgrid").datagrid("loadData",{total:0,rows:[],footer:[{num:"合计",money:0}]});
 							});
 						}
 					})
@@ -107,14 +107,14 @@ $(function(){
 			}
 		],
 		onClickRow:function(rowIndex,rowData){
-			$("#grid").datagrid("endEdit",existEditIndex);	
+			$("#ordersgrid").datagrid("endEdit",existEditIndex);	
 			existEditIndex = rowIndex;
-			$("#grid").datagrid("beginEdit",existEditIndex);	
+			$("#ordersgrid").datagrid("beginEdit",existEditIndex);	
 		}
 	});
 	
 	//加载行脚
-	$("#grid").datagrid("reloadFooter",[{num:'合计',money:0}]);
+	$("#ordersgrid").datagrid("reloadFooter",[{num:'合计',money:0}]);
 	
 	//加载供应商下拉表格
 	$("#supplier").combogrid({
@@ -131,10 +131,11 @@ $(function(){
 			{field:"email",title:"邮件地址",width:100}
 		]]
 	});
+	
 });
 
 function getEditor(_field){
-	return $("#grid").datagrid("getEditor",{index:existEditIndex,field:_field});
+	return $("#ordersgrid").datagrid("getEditor",{index:existEditIndex,field:_field});
 }
 
 function cal(){
@@ -148,7 +149,7 @@ function cal(){
 	edi = getEditor("money");
 	$(edi.target).numberbox("setValue",total);
 	//上面这样设置没有实际设置到表格中，只是设置显示
-	$("#grid").datagrid("getRows")[existEditIndex].money = total;
+	$("#ordersgrid").datagrid("getRows")[existEditIndex].money = total;
 }
 /**
  * 绑定事件（自动计算金额）
@@ -168,14 +169,14 @@ function bindGridEditor(numEditor){
  * @returns
  */
 function sum(){
-	var rows = $("#grid").datagrid("getRows");
+	var rows = $("#ordersgrid").datagrid("getRows");
 	var total = 0;
 	$.each(rows,function(i,row){
 		total += parseFloat(row.money);
 	})
 	
 	total = total.toFixed(2);
-	$("#grid").datagrid("reloadFooter",[{num:'合计',money:total}]);
+	$("#ordersgrid").datagrid("reloadFooter",[{num:'合计',money:total}]);
 }
 /**
  * 删除行
@@ -184,12 +185,12 @@ function sum(){
  */
 function deleteRow(rowIndex){
 	//关闭编辑
-	$("#grid").datagrid("endEdit",existEditIndex);
+	$("#ordersgrid").datagrid("endEdit",existEditIndex);
 	//删除行
-	$("#grid").datagrid("deleteRow",rowIndex);
-	var data = $("#grid").datagrid("getData");
+	$("#ordersgrid").datagrid("deleteRow",rowIndex);
+	var data = $("#ordersgrid").datagrid("getData");
 	//重新加载数据
-	$("#grid").datagrid("loadData",data);
+	$("#ordersgrid").datagrid("loadData",data);
 	//计算合计
 	sum();
 }

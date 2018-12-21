@@ -4,18 +4,32 @@
 $(function(){
 	
 	var url = "ordersAction_getListByPage?t1.type=1";
+	
+	
+	if(Request['oper'] = "myOrders"){
+		url = "ordersAction_myListByPage?t1.type=1";
+		document.title="我的订单";
+	}
+	
+	if(Request['oper'] == 'orders'){
+		url += "?t1.type=1";
+		document.title="采购订单查询";
+	}
 	//如果是审核业务，加上state=0，只查询未审核的订单
 	if(Request['oper'] == 'doCheck'){
 		url += "&t1.state=0";
+		document.title="采购订单审核";
 	}
 	
 	if(Request['oper'] == 'doStart'){
 		url += "&t1.state=1";
+		document.title="采购订单确认";
 	}
 	
 	
 	if(Request['oper'] == 'doInStore'){
 		url += "&t1.state=2";
+		document.title="采购订单入库";
 	}
 	
 	
@@ -73,7 +87,7 @@ $(function(){
 			{field:'state',title:'状态',width:100,formatter:getDetailState}
 		]],
 		fitColumns:true,
-		singletSelect:true
+		singleSelect:true
 	});
 	
 	//添加审核按钮
@@ -137,6 +151,30 @@ $(function(){
 			}
 		});
 	}
+	
+	//添加采购申请
+	if(Request['oper'] = "myOrders"){
+		$("#grid").datagrid({
+			toolbar:[
+				{
+					text:"采购申请",
+					iconCls:'icon-add',
+					handler:function(){
+						$("#addOrderDlg").dialog("open");
+					}
+				}
+			]
+		});
+	}
+	
+	//加载增加订单
+	$("#addOrderDlg").dialog({
+		width:700,
+		height:400,
+		title:'增加订单',
+		modal:true,
+		closed:true
+	})
 })
 /**
  * 日期格式化器
@@ -246,8 +284,6 @@ function doInStore(){
 							//刷新明细列
 							var row = $("#itemgrid").datagrid("getSelected");
 							console.log($("#itemgrid"));
-							var get = $("#itemgrid").datagrid("getSelections");
-							console.log(get);
 							$('#itemgrid').datagrid('getSelected').state = "1";
 							var data = $("#itemgrid").datagrid("getData");
 							//如果所有明细都入库了，应该关闭订单详情，并且刷新订单列表
@@ -261,7 +297,7 @@ function doInStore(){
 							
 							if(allDone == true){
 								//关闭详情窗口
-								$("#ordersDlg").dialog("close");
+								$("#orderDlg").dialog("close");
 								//刷新订单列表
 								$("#grid").datagrid("reload");
 							}

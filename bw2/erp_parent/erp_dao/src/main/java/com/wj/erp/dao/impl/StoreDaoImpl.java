@@ -24,6 +24,10 @@ public class StoreDaoImpl extends BaseDaoImpl<Store> implements IStoreDao{
 		DetachedCriteria dc = DetachedCriteria.forClass(Store.class);
 		if(null != store) {
 			
+			//根据员工编号查询
+			if(null != store.getEmpuuid()) {
+				dc.add(Restrictions.eq("empuuid", store.getUuid()));
+			}
 		}
 		return dc;
 	}

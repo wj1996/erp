@@ -33,6 +33,11 @@ public class OrdersDaoImpl extends BaseDaoImpl<Orders> implements IOrdersDao{
 				if(StringUtils.isNotBlank(orders.getState())) {
 					dc.add(Restrictions.eq("state", orders.getState()));
 				}
+				
+				//根据订单的创建者查询
+				if(null != orders.getCreater()) {
+					dc.add(Restrictions.eq("creater", orders.getCreater()));
+				}
 			}
 		}
 		return dc;
