@@ -69,10 +69,15 @@
 	<!-- [comment] -->
 	<bean id="storedetailBiz" class="com.wj.erp.biz.impl.StoredetailBizImpl">
 		<property name="storedetailDao" ref="storedetailDao" />
+		<property name="storeDao" ref="storeDao" />
+		<property name="goodsDao" ref="goodsDao" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="storeoperBiz" class="com.wj.erp.biz.impl.StoreoperBizImpl">
 		<property name="storeoperDao" ref="storeoperDao" />
+		<property name="storeDao" ref="storeDao" />
+		<property name="goodsDao" ref="goodsDao" />
+		<property name="empDao" ref="empDao" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="supplierBiz" class="com.wj.erp.biz.impl.SupplierBizImpl">

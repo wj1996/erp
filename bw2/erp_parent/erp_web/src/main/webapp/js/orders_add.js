@@ -30,7 +30,14 @@ $(function(){
 //						console.log($(edi));
 //						$(edi.target).val("1");
 						edi = getEditor("price");
-						$(edi.target).numberbox("setValue",good.inprice);
+						if(Request['type'] * 1 == 1){
+							//设置为进货价格
+							$(edi.target).numberbox("setValue",good.inprice);
+						}
+						if(Request['type'] * 1 == 2){
+							//设置为销售价格
+							$(edi.target).numberbox("setValue",good.outprice);
+						}
 						var numEditor = getEditor("num");
 						$(numEditor.target).select();
 						bindGridEditor(numEditor);
@@ -90,7 +97,7 @@ $(function(){
 					formdata.json = JSON.stringify(rows);
 //					formdata['json'] = JSON.stringify(rows);  //两种方式都可以
 					$.ajax({
-						url:"ordersAction_add",
+						url:"ordersAction_add?t.type=" + Request['type'],
 						data:formdata,
 						dataType:"json",
 						type:"post",
@@ -100,6 +107,9 @@ $(function(){
 								$("#supplier").combogrid("clear");
 								//清空表格
 								$("#ordersgrid").datagrid("loadData",{total:0,rows:[],footer:[{num:"合计",money:0}]});
+								$("#addOrderDlg").dialog("close");
+								$("#grid").datagrid("reload");
+								
 							});
 						}
 					})
@@ -121,7 +131,7 @@ $(function(){
 		panelWidth:700,
 		idField:'uuid',
 		textField:"name",
-		url:"supplierAction_getList?t1.type=1",
+		url:"supplierAction_getList?t1.type=" + Request['type'],
 		columns:[[
 			{field:"uuid",title:"编号",width:100},
 			{field:"name",title:"名称",width:100},
@@ -129,7 +139,8 @@ $(function(){
 			{field:"contact",title:"联系人",width:100},
 			{field:"tele",title:"联系电话",width:100},
 			{field:"email",title:"邮件地址",width:100}
-		]]
+		]],
+		mode:'remote'
 	});
 	
 });

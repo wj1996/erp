@@ -26,6 +26,10 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
 			if(null != supplier.getType()) {
 				dc.add(Restrictions.eq("type", supplier.getType()));
 			}
+			
+			if(null != supplier.getName()) {
+				dc.add(Restrictions.like("name", supplier.getName()));
+			}
 		}
 		return dc;
 	}

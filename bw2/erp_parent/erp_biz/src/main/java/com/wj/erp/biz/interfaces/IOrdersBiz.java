@@ -22,4 +22,6 @@ public interface IOrdersBiz extends IBaseBiz<Orders>{
 	 * @param empUuid（采购员工编号）
 	 */
 	void doStart(Long uuid,Long empUuid);
+	
+	
 }

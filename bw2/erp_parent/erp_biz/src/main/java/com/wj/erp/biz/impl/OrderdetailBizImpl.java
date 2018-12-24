@@ -82,10 +82,66 @@ public class OrderdetailBizImpl extends BaseBizImpl<Orderdetail> implements IOrd
 		Integer count = orderdetailDao.getCount(queryParam, null, null);
 		if(count == 0) {
 			//所有订单明细都入库了
-			orders.setState(Constant.STATE_END);
+			orders.setState(Constant.STATE_IN);
 			orders.setEndtime(orderdetail.getEndtime());
 			orders.setEnder(empuuid);
 		}
+	}
+
+	@Override
+	public void doOutStore(Long uuid, Long storeuuid, Long empuuid) {
+		Orderdetail orderdetail = orderdetailDao.getById(uuid);
+		
+		if(!Constant.STATE_NOT_OUT.equals(orderdetail.getState())) {
+			throw new ErpException("亲！该明细已经出库了，不能重复出库");
+		}
+		
+		orderdetail.setState(Constant.STATE_OUT);
+		orderdetail.setEnder(empuuid);
+		orderdetail.setStoreuuid(storeuuid);
+		orderdetail.setEndtime(new Date());
+		
+		//检查是否存在库存信息
+		Storedetail storedetail = new Storedetail();
+		storedetail.setGoodsuuid(orderdetail.getGoodsuuid());
+		storedetail.setStoreuuid(orderdetail.getStoreuuid());
+		List<Storedetail> list = storedetailDao.getList(storedetail, null, null);
+		if(null != list && list.size() > 0) {
+			
+			Storedetail sd = list.get(0);
+			sd.setNum(sd.getNum() - orderdetail.getNum());
+			if(sd.getNum() < 0) {
+				throw new ErpException("库存不足");
+			}
+//			storedetailDao.update(sd);
+		}else {
+			throw new ErpException("库存不足！");
+		}
+		
+		//构建操作记录
+		Storeoper oper = new Storeoper();
+		oper.setEmpuuid(empuuid);
+		oper.setGoodsuuid(orderdetail.getGoodsuuid());
+		oper.setNum(orderdetail.getNum());
+		oper.setOpertime(orderdetail.getEndtime());
+		oper.setStoreuuid(storedetail.getUuid());
+		oper.setType(Constant.STOREOPER_TYPE_IN);
+		storeoperDao.add(oper);
+		
+		//查询订单下是否还存在状态为0的明细
+		Orderdetail queryParam = new Orderdetail();
+		Orders orders = orderdetail.getOrders();
+		queryParam.setOrders(orders);
+		queryParam.setState(Constant.ORDERS_STATE_NOT_OUT);
+		Integer count = orderdetailDao.getCount(queryParam, null, null);
+		if(count == 0) {
+			//所有订单明细都出库了
+			orders.setState(Constant.STATE_OUT);
+			orders.setEndtime(orderdetail.getEndtime());
+			orders.setEnder(empuuid);
+		}
+		
+		
 	}
 
 	

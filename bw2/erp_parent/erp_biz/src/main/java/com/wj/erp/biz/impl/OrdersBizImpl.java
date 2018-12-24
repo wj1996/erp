@@ -45,7 +45,7 @@ public class OrdersBizImpl extends BaseBizImpl<Orders> implements IOrdersBiz {
 	@Override
 	public void add(Orders orders) {
 		orders.setState(Constant.STATE_CREATE);
-		orders.setType(Constant.TYPE_IN);
+//		orders.setType(Constant.TYPE_IN); //由前台传入
 		orders.setCreatetime(new Date());
 
 		double total = 0;
