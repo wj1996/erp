@@ -11,6 +11,7 @@
 		<module>erp_biz</module>
 		<module>erp_dao</module>
 		<module>erp_entity</module>
+		<module>erp_demo</module>
 	</modules>
 	<build>
 		<plugins>
@@ -227,6 +228,15 @@
 			<artifactId>shiro-aspectj</artifactId>
 			<version>${shiro.version}</version>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/jfree/jfreechart -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

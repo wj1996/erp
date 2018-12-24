@@ -83,5 +83,7 @@
 	<bean id="supplierBiz" class="com.wj.erp.biz.impl.SupplierBizImpl">
 		<property name="supplierDao" ref="supplierDao" />
 	</bean>
-	
+	<bean id="reportBiz" class="com.wj.erp.biz.impl.ReportBizImpl">
+		<property name="reportDao" ref="reportDao" />
+	</bean>
 </beans>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="ui/themes/default/easyui.css" />
+<link rel="stylesheet" href="ui/themes/icon.css" />
+<script src="ui/jquery.min.js"></script>
+<script src="ui/jquery.easyui.min.js"></script>
+<script src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script src="ui/jquery.serializejson.min.js"></script>
+<script src="js/report.js"></script>
+</head>
+<body>
+	<form id="searchForm">
+		开始日期：<input name="startDate" class="easyui-datebox" />
+		截止日期：<input name="endDate" class="easyui-datebox" />
+		<button type="button" id="btnSearch">查询</button>
+	</form>
+	<div style="height:2px"></div>
+	<table id="grid"></table>
+</body>
+</html>

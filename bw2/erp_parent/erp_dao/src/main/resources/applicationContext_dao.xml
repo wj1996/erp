@@ -76,5 +76,9 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="reportDao" class="com.wj.erp.dao.impl.ReportDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<!-- <import resource="classpath:applicationContext_datasource.xml"/> -->
 </beans>
