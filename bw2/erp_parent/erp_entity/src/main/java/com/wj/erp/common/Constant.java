@@ -42,4 +42,8 @@ public class Constant {
 	public final static String STOREOPER_TYPE_IN = "1";
 	public final static String STOREOPER_TYPE_OUT = "1";
 	
+	//
+	public final static String TYPE_SUPPLIER = "1";
+	public final static String TYPE_CUSTOMER = "2";
+	
 }

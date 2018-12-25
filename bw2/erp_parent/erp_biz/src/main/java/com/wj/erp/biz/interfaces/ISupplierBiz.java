@@ -1,5 +1,7 @@
 package com.wj.erp.biz.interfaces;
 
+import java.io.OutputStream;
+
 import com.wj.erp.entity.Supplier;
 
 /**
@@ -9,4 +11,9 @@ import com.wj.erp.entity.Supplier;
  */
 public interface ISupplierBiz extends IBaseBiz<Supplier>{
 
+	/**
+	 * 导出数据
+	 * @param os
+	 */
+	void export(OutputStream os,Supplier t);
 }
