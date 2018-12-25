@@ -34,4 +34,12 @@ public class ReportDaoImpl extends HibernateDaoSupport implements IReportDao{
 		return getHibernateTemplate().find(hql.toString(),dateList.toArray(new Date[]{}));
 	}
 
+	@Override
+	public List trendReport(Long year) {
+		StringBuilder hql = new StringBuilder();
+		hql.append("select new Map(month(o.createtime) as name,sum(ol.money) as y) from Orderdetail ol,Orders o where ");
+		hql.append("ol.orders = o and o.type = '2' and year(o.createtime) = ?0 group by month(o.createtime)");
+		return getHibernateTemplate().find(hql.toString(),year.intValue());
+	}
+
 }

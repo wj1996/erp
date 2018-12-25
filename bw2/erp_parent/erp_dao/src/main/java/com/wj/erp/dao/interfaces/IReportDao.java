@@ -15,4 +15,11 @@ public interface IReportDao {
 	 * @return
 	 */
 	List ordersReport(Date startDate,Date endDate);
+	
+	/**
+	 * 销售趋势
+	 * @param year
+	 * @return
+	 */
+	List trendReport(Long year);
 }

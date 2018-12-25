@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.wj.erp.biz.interfaces.IReportBiz;
 
 /**
@@ -41,6 +42,20 @@ public class ReportAction {
 		write(JSON.toJSONString(list));
 	}
 	
+	private Long year;
+	
+	public void setYear(Long year) {
+		this.year = year;
+	}
+
+	public void trendReport() {
+		List list = reportBiz.trendReport(year);
+		write(JSONObject.toJSONString(list));
+	}
+	
+	
+	
+	
 	public void write(String jsonString) {
 		try {
 			String jsonp = ServletActionContext.getRequest().getParameter("callback");
@@ -56,6 +71,5 @@ public class ReportAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
