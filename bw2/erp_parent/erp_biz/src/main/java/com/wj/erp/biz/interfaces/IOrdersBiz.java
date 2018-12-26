@@ -1,5 +1,7 @@
 package com.wj.erp.biz.interfaces;
 
+import java.io.OutputStream;
+
 import com.wj.erp.entity.Orders;
 
 /**
@@ -23,5 +25,10 @@ public interface IOrdersBiz extends IBaseBiz<Orders>{
 	 */
 	void doStart(Long uuid,Long empUuid);
 	
+	/**
+	 * 导出订单
+	 * @param os
+	 */
+	void export(OutputStream os,Long uuid);
 	
 }

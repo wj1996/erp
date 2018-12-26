@@ -10,8 +10,8 @@
 <script src="ui/locale/easyui-lang-zh_CN.js"></script>
 <script src="ui/jquery.serializejson.min.js"></script>
 <script src="ui/request.js"></script>
+<script src="ui/download.js"></script>
 <script type="text/javascript">
-
 
 	var listParam = "";
 	var saveParam = "";
@@ -51,6 +51,20 @@
 				handler:function(){
 					$("#addDlg").dialog("open");
 				}
+			},"-",{
+				text:"导出",
+				iconCls:'icon-excel',
+				handler:function(){
+					var formData = $("#searchForm").serializeJSON();
+					//下载文件（注意此处的逻辑均为公用逻辑，还未抽取到crud.js中）
+					$.download("supplierAction_export" + listParam,formData);
+				}
+			},"-",{
+				text:"导入",
+				iconCls:'icon-save',
+				handler:function(){
+					$("#importDlg").dialog("open");
+				}
 			}]
 		});	
 		$("#btnSearch").bind("click",function(){
@@ -70,6 +84,36 @@
 					$("#grid").datagrid("loadData",rtn);
 				}
 			}); */
+		});
+		
+		$("#importDlg").dialog({
+			title:"导入数据",
+			width:330,
+			height:156,
+			closed:true,//窗口是否为关闭状体,true表示关闭
+			modal:true,
+			buttons:[
+				{
+					text:"导入",
+					handler:function(){
+						$.ajax({
+							url:"supplierAction_doImport",
+							data: new FormData($("#importForm")[0]),
+							type:"post",
+							dataType:"json",
+							processDat:false, 
+							contentType:false,   //此两处必须要这样设置
+							success:function(rtn){
+								$.messager.alert("提示",rtn.message,'info',function(){
+									if(rtn.success){
+										$("#grid").datagrid("reload");
+									}
+								})
+							}
+						})
+					}
+				}
+			]
 		});
 		
 		$("#addDlg").dialog({
@@ -319,6 +363,12 @@
 					<td><button id="btnEdit" type="button">修改</button></td>
 				</tr>
 			</table>
+		</form>
+	</div>
+	<!-- 导入窗口 -->
+	<div id="importDlg" style="padding:2px;">
+		<form id="importForm" enctype="multipart/form-data">
+			导入文件：<input type="file" name="file"  />
 		</form>
 	</div>
 </body>

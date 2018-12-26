@@ -116,6 +116,13 @@ $(function(){
 					handler:function(){
 						doCheck();
 					}
+				},
+				{
+					text:"导出",
+					iconCls:'icon-excel',
+					handler:function(){
+						doExport();
+					}
 				}
 			]
 		});
@@ -407,6 +414,10 @@ function getColumns(){
 			{field:'waybillsn',title:'运单号',width:100}
 		]];
 	}
+}
+
+function doExport(){
+	$.download("ordersAction_export",{"id":$("#uuid").html()});
 }
 
 

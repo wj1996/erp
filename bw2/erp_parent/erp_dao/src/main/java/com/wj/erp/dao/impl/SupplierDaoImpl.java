@@ -1,5 +1,6 @@
 package com.wj.erp.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -23,14 +24,25 @@ public class SupplierDaoImpl extends BaseDaoImpl<Supplier> implements ISupplierD
 	public DetachedCriteria getDetachedCriteria(Supplier supplier,Supplier supplier2) {
 		DetachedCriteria dc = DetachedCriteria.forClass(Supplier.class);
 		if(null != supplier) {
-			if(null != supplier.getType()) {
+			if(StringUtils.isNotBlank(supplier.getType())) {
 				dc.add(Restrictions.eq("type", supplier.getType()));
 			}
 			
-			if(null != supplier.getName()) {
+			if(StringUtils.isNotBlank(supplier.getName())) {
 				dc.add(Restrictions.like("name", supplier.getName()));
 			}
 		}
+		
+		if(null != supplier2) {
+			if(StringUtils.isNotBlank(supplier2.getName())) {
+				dc.add(Restrictions.eq("name",supplier2.getName()));
+			}
+			if(StringUtils.isNotBlank(supplier2.getType())) {
+				dc.add(Restrictions.eq("type",supplier2.getType()));
+			}
+		}
+		
+		
 		return dc;
 	}
 
