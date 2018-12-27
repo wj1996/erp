@@ -20,6 +20,8 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.redsum.bos.ws.Waybilldetail;
+import com.redsum.bos.ws.impl.IWaybillWs;
 import com.wj.erp.biz.exception.ErpException;
 import com.wj.erp.biz.interfaces.IOrdersBiz;
 import com.wj.erp.common.Constant;
@@ -42,6 +44,11 @@ public class OrdersBizImpl extends BaseBizImpl<Orders> implements IOrdersBiz {
 	private IOrdersDao ordersDao;
 	private IEmpDao empDao;
 	private ISupplierDao supplierDao;
+	private IWaybillWs waybillWs;
+	
+	public void setWaybillWs(IWaybillWs waybillWs) {
+		this.waybillWs = waybillWs;
+	}
 
 	public void setEmpDao(IEmpDao empDao) {
 		this.empDao = empDao;
@@ -324,6 +331,11 @@ public class OrdersBizImpl extends BaseBizImpl<Orders> implements IOrdersBiz {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<Waybilldetail> waybilldetailList(Long sn) {
+		return waybillWs.waybilldetailList(sn);
 	}
 
 }

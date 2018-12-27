@@ -39,12 +39,15 @@
 		<property name="orderdetailDao" ref="orderdetailDao" />
 		<property name="storedetailDao" ref="storedetailDao" />
 		<property name="storeoperDao" ref="storeoperDao" />
+		<property name="waybillWs" ref="waybillClient" />
+		<property name="supplierDao" ref="supplierDao" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="ordersBiz" class="com.wj.erp.biz.impl.OrdersBizImpl">
 		<property name="ordersDao" ref="ordersDao" />
 		<property name="empDao" ref="empDao" />
 		<property name="supplierDao" ref="supplierDao" />
+		<property name="waybillWs" ref="waybillClient" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="returnorderdetailBiz" class="com.wj.erp.biz.impl.ReturnorderdetailBizImpl">

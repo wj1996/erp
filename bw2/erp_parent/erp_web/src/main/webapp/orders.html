@@ -50,6 +50,16 @@
 				<td width="10%" class="bg noBorderBottom">库管日期</td>
 				<td width="15%" class="noBorderBottom" id="endtime"></td>
 			<tr>
+			<tr>
+				<td width="10%" class="bg noBorderBottom">运单号</td>
+				<td width="15%" class="noBorderBottom" id="waybillsn"></td>
+				<!-- <td width="10%" class="bg noBorderBottom"></td>
+				<td width="15%" class="noBorderBottom" ></td>
+				<td width="10%" class="bg noBorderBottom"></td>
+				<td width="15%" class="noBorderBottom" ></td>
+				<td width="10%" class="bg noBorderBottom"></td>
+				<td width="15%" class="noBorderBottom" ></td> -->
+			<tr>
 		</table>
 		<table id="itemgrid"></table>
 	</div>
@@ -85,6 +95,12 @@
 			<div style="height: 5px;"></div>
 		</form>
 		<table id="ordersgrid"></table>
+	</div>
+	<!-- 物流详情窗口 -->
+	<div id="waybillDlg" style="padding: 2px;" class="easyui-dialog" data-options="
+		title:'订单详情',width:500,height:300,modal:true,closed:true
+	">
+		<table id="waybillgrid"></table>
 	</div>
 </body>
 </html>

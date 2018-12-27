@@ -86,6 +86,56 @@ $(function(){
 			$("#checktime").html(formatDate(rowData.checktime));
 			$("#starttime").html(formatDate(rowData.starttime));
 			$("#endtime").html(formatDate(rowData.endtime));
+			$("#waybillsn").html(rowData.waybillsn);
+			
+			if(rowData.state * 1 == 1){
+				//添加运单详情的按钮
+				var options = $("#orderDlg").dialog("options");
+				var toolbar = options.toolbar;
+				if(null != toolbar){
+					toolbar.push({
+						text:"订单详情",
+						iconCls:'icon-search',
+						handler:function(){
+							$("#waybillDlg").dialog("open");
+							$("#waybillgrid").datagrid({
+								url:"ordersAction_waybilldetailList?waybillsn=" + $("#waybillsn").html(),
+								columns:[[
+									{field:'exedate',title:'执行日期',width:100},
+						  		    {field:'exetime',title:'执行时间',width:100},
+						  		    {field:'info',title:'执行信息',width:100}
+								]],
+								rownumbers:true
+							})
+						}
+					});
+					
+					//重新渲染工具栏
+					$("#orderDlg").dialog({
+						toolbar:toolbar
+					});
+				}else{
+					$("#orderDlg").dialog({
+						toolbar:[{
+							text:"订单详情",
+							iconCls:'icon-search',
+							handler:function(){
+								$("#waybillDlg").dialog("open");
+								$("#waybillgrid").datagrid({
+									url:"ordersAction_waybilldetailList?waybillsn=" + $("#waybillsn").html(),
+									columns:[[
+										{field:'exedate',title:'执行日期',width:100},
+							  		    {field:'exetime',title:'执行时间',width:100},
+							  		    {field:'info',title:'执行信息',width:100}
+									]],
+									rownumbers:true
+								})
+							}
+						}]
+					});
+				}
+			}
+			
 			$("#orderDlg").dialog("open");
 			//加载明细列表
 			$("#itemgrid").datagrid("loadData",rowData.orderDetails);
@@ -158,6 +208,7 @@ $(function(){
 			}
 		]
 	})
+	
 	
 	/**
 	 * 出入库添加双击事件

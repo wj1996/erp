@@ -16,5 +16,10 @@
 			<artifactId>erp_dao</artifactId>
 			 <version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.wj.erp</groupId>
+			<artifactId>erp_client</artifactId>
+			 <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
+import com.redsum.bos.ws.Waybilldetail;
 import com.wj.erp.biz.exception.ErpException;
 import com.wj.erp.biz.interfaces.IOrdersBiz;
 import com.wj.erp.common.Constant;
@@ -134,4 +135,20 @@ public class OrdersAction extends BaseAction<Orders> {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	private Long waybillsn;
+
+	public void setWaybillsn(Long waybillsn) {
+		this.waybillsn = waybillsn;
+	}
+	/**
+	 * 根据运单号查询运单详情
+	 */
+	public void waybilldetailList() {
+		List<Waybilldetail> waybilldetailList = ordersBiz.waybilldetailList(waybillsn);
+		write(JSON.toJSONString(waybilldetailList));
+		
+	}
+	
 }

@@ -5,16 +5,19 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.redsum.bos.ws.impl.IWaybillWs;
 import com.wj.erp.biz.exception.ErpException;
 import com.wj.erp.biz.interfaces.IOrderdetailBiz;
 import com.wj.erp.common.Constant;
 import com.wj.erp.dao.interfaces.IOrderdetailDao;
 import com.wj.erp.dao.interfaces.IStoredetailDao;
 import com.wj.erp.dao.interfaces.IStoreoperDao;
+import com.wj.erp.dao.interfaces.ISupplierDao;
 import com.wj.erp.entity.Orderdetail;
 import com.wj.erp.entity.Orders;
 import com.wj.erp.entity.Storedetail;
 import com.wj.erp.entity.Storeoper;
+import com.wj.erp.entity.Supplier;
 /**
  * 订单明细业务逻辑层
  * @author [author]
@@ -26,6 +29,16 @@ public class OrderdetailBizImpl extends BaseBizImpl<Orderdetail> implements IOrd
 	private IOrderdetailDao orderdetailDao;
 	private IStoredetailDao storedetailDao;
 	private IStoreoperDao storeoperDao;
+	private IWaybillWs waybillWs;
+	private ISupplierDao supplierDao;
+	
+	public void setSupplierDao(ISupplierDao supplierDao) {
+		this.supplierDao = supplierDao;
+	}
+
+	public void setWaybillWs(IWaybillWs waybillWs) {
+		this.waybillWs = waybillWs;
+	}
 	
 	public void setOrderdetailDao(IOrderdetailDao orderdetailDao) {
 		this.orderdetailDao = orderdetailDao;
@@ -139,6 +152,12 @@ public class OrderdetailBizImpl extends BaseBizImpl<Orderdetail> implements IOrd
 			orders.setState(Constant.STATE_OUT);
 			orders.setEndtime(orderdetail.getEndtime());
 			orders.setEnder(empuuid);
+			//客户
+			Supplier supplier = supplierDao.getById(orders.getSupplieruuid());
+			//获取订单号
+			Long waybillsn = waybillWs.addWaybill(1L, supplier.getAddress(), supplier.getContact(), supplier.getTele(), "--");
+			//更新订单号
+			orders.setWaybillsn(waybillsn);
 		}
 		
 		

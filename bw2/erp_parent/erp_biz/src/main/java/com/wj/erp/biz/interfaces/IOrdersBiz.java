@@ -1,7 +1,9 @@
 package com.wj.erp.biz.interfaces;
 
 import java.io.OutputStream;
+import java.util.List;
 
+import com.redsum.bos.ws.Waybilldetail;
 import com.wj.erp.entity.Orders;
 
 /**
@@ -30,5 +32,12 @@ public interface IOrdersBiz extends IBaseBiz<Orders>{
 	 * @param os
 	 */
 	void export(OutputStream os,Long uuid);
+	
+	/**
+	 * 根据运单号查询运单详情
+	 * @param sn
+	 * @return
+	 */
+	List<Waybilldetail> waybilldetailList(Long sn);
 	
 }

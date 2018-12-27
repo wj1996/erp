@@ -17,35 +17,55 @@
 	}
 </style>
 <script>
+
+	$(function(){
+		
+		$("#password").bind("keydown",function(event){
+			if(event.keyCode == 13){
+				$("#btnLogin").click();
+			}
+		})
+		
+		$("#btnLogin").bind("click",function(){
+			alert(1);
+		})
+	})
+
 	function clearAll(){
-		alert("clearAll");
+		$("#username").val("");		
+		$("#password").val("");		
 	}
 </script>
 </head>
 <body>
-	<div class="EasyUI-window" id="mainwindow" title="登录" border="false" resizable="false",draggable="false",minimizable="false",maximizable="false">
-		<div id="loginForm">
-			<table cellpadding="0" cellspacing="3">
-				<tr>
-					<td>登录账号</td>
-					<td>
-						<input type="text" id="username" />
-					</td>
-				</tr>
-				<tr>
-					<td>登录密码</td>
-					<td>
-						<input type="password" id="password" />
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<a id="btnLogin" class="EasyUI-linkbutton">登录</a>
-						<a class="EasyUI-linkbutton" onClick="clearAll()">重置</a>
-					</td>
-				</tr>
-			</table>
+	<div class="easyui-window" id="mainwindow" title="登录" border="false" resizable="false",draggable="false",minimizable="false",maximizable="false">
+		<div style="padding:60px 0;">
+			<div id="loginForm">
+				<div style="padding-left:150px;">
+					<table cellpadding="0" cellspacing="3">
+						<tr>
+							<td>登录账号&nbsp;</td>
+							<td>
+								<input type="text" id="username" style="width:150px;" />
+							</td>
+						</tr>
+						<tr>
+							<td>登录密码&nbsp;</td>
+							<td>
+								<input type="password" id="password" style="width:150px;" />
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<a id="btnLogin" class="easyui-linkbutton">登录</a>
+								<a class="easyui-linkbutton" onClick="clearAll()">重置</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
 		</div>
 	</div>
 </body>
