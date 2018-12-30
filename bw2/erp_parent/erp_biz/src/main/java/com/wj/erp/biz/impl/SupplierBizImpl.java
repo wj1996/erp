@@ -84,10 +84,12 @@ public class SupplierBizImpl extends BaseBizImpl<Supplier> implements ISupplierB
 			wk = new HSSFWorkbook(is);
 			HSSFSheet sheet = wk.getSheetAt(0);
 			String type = "";
+			
+			System.out.println(sheet.getSheetName());
+			
 			if("供应商".equals(sheet.getSheetName())) {
 				type = Constant.TYPE_SUPPLIER;
-			}
-			if("客户".equals(sheet.getSheetName())) {
+			}else if("客户".equals(sheet.getSheetName())) {
 				type = Constant.TYPE_CUSTOMER;
 			}else {
 				throw new ErpException("当前工作表名称不正确");
@@ -96,7 +98,7 @@ public class SupplierBizImpl extends BaseBizImpl<Supplier> implements ISupplierB
 			//读取数据
 			int lastRowNum = sheet.getLastRowNum();
 			Supplier supplier = null;
-			for(int i = 1;i < lastRowNum;i++) {
+			for(int i = 1;i <= lastRowNum;i++) {
 				supplier = new Supplier();
 				supplier.setName(sheet.getRow(i).getCell(0).getStringCellValue());
 				supplier.setType(type);
@@ -105,10 +107,10 @@ public class SupplierBizImpl extends BaseBizImpl<Supplier> implements ISupplierB
 				if(null != list && list.size() > 0) {
 					supplier = list.get(0);
 				}
-				supplier.setAddress(sheet.getRow(i).getCell(1).getStringCellValue());
-				supplier.setContact(sheet.getRow(i).getCell(2).getStringCellValue());
-				supplier.setTele(sheet.getRow(i).getCell(3).getStringCellValue());
-				supplier.setEmail(sheet.getRow(i).getCell(4).getStringCellValue());
+				supplier.setAddress(sheet.getRow(i).getCell(1) == null ? "" : sheet.getRow(i).getCell(1).getStringCellValue());
+				supplier.setContact(sheet.getRow(i).getCell(2) == null ? "" : sheet.getRow(i).getCell(1).getStringCellValue());
+				supplier.setTele(sheet.getRow(i).getCell(3) == null ? "" : sheet.getRow(i).getCell(1).getStringCellValue());
+				supplier.setEmail(sheet.getRow(i).getCell(4) == null ? "" : sheet.getRow(i).getCell(1).getStringCellValue());
 				if(list.size() > 0) {
 					supplierDao.update(supplier);
 				}else {

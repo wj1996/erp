@@ -69,7 +69,7 @@ public class SupplierAction extends BaseAction<Supplier> {
 	}
 	
 	private File file; //上传的文件
-	private String fileFilename;//上传文件名
+	private String fileFileName;//上传文件名
 	private String fileContentType;//上传文件类型
 	
 	public File getFile() {
@@ -80,12 +80,12 @@ public class SupplierAction extends BaseAction<Supplier> {
 		this.file = file;
 	}
 
-	public String getFileFilename() {
-		return fileFilename;
+	public String getFileFileName() {
+		return fileFileName;
 	}
 
-	public void setFileFilename(String fileFilename) {
-		this.fileFilename = fileFilename;
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
 	}
 
 	public String getFileContentType() {

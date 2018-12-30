@@ -101,11 +101,12 @@
 							data: new FormData($("#importForm")[0]),                                                                                                                                                                                                
 							type:"post",
 							dataType:"json",
-							processDat:false, 
+							processData:false, 
 							contentType:false,   //此两处必须要这样设置
 							success:function(rtn){
 								$.messager.alert("提示",rtn.message,'info',function(){
 									if(rtn.success){
+										$("#importDlg").dialog("close");
 										$("#grid").datagrid("reload");
 									}
 								})
