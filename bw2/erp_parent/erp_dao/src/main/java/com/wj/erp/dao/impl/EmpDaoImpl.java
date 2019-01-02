@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.wj.erp.dao.interfaces.IEmpDao;
 import com.wj.erp.entity.Emp;
+import com.wj.erp.entity.Menu;
 /**
  * 员工数据访问层类
  * @author [author]
@@ -68,6 +69,13 @@ public class EmpDaoImpl extends BaseDaoImpl<Emp> implements IEmpDao{
 	public void updatePwd(Long uuid, String pwd) {
 		String hql = "update Emp set pwd = ?0 where uuid = ?1";
 		this.getHibernateTemplate().bulkUpdate(hql, pwd,uuid);
+	}
+
+	@Override
+	public List<Menu> getMenusByEmpuuid(Long uuid) {
+		StringBuffer hql = new StringBuffer();
+		hql.append("select m from Emp e join e.roles r join r.menus m where e.uuid = ?0");
+		return (List<Menu>) this.getHibernateTemplate().find(hql.toString(),uuid);
 	}
 
 

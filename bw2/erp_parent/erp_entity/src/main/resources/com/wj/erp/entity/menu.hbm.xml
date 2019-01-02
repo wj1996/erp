@@ -13,7 +13,7 @@
 		<property name="url" />
 		<!-- <property name="pid" /> -->
 		<!-- 自关联 -->
-		<bag name="menus" order-by="menuid">
+		<bag name="menus" order-by="menuid" lazy="false">
 			<key column="pid"></key>
 			<one-to-many class="com.wj.erp.entity.Menu" />
 		</bag>

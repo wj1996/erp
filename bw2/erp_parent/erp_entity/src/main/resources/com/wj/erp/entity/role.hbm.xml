@@ -9,5 +9,10 @@
 			</generator>
 		</id>
 		<property name="name" />
+		<!-- 多对多关系，角色配置 中间表role_menu -->
+		<bag name="menus" order-by="menuuuid" table="role_menu">
+			<key column="roleuuid"></key>
+			<many-to-many class="com.wj.erp.entity.Menu" column="menuuuid"></many-to-many>
+		</bag>
 	</class>
 </hibernate-mapping>

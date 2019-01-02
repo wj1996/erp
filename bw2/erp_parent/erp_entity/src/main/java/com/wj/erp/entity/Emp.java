@@ -1,6 +1,7 @@
 package com.wj.erp.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -24,7 +25,15 @@ public class Emp implements Serializable{
 	private java.util.Date birthday; //出生年月日
 //	private Long depuuid; //部门编号
 	private Dep dep;
+	@JSONField(serialize=false)
+	private List<Role> roles; //用户下面所拥有的角色集合
 	
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 	public Long getUuid() {
 		return uuid;
 	}

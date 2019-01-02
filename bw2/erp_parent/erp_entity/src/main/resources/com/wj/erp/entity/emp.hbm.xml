@@ -19,5 +19,12 @@
 		<!-- <property name="depuuid" /> -->
 		<!-- 修改为外键指向 -->
 		<many-to-one name="dep" class="com.wj.erp.entity.Dep" column="depuuid" lazy="false"></many-to-one>
+		
+		<!-- 配置多对多关系 -->
+		<bag name="roles" order-by="roleuuid" table="emp_role">
+			<key column="empuuid"></key>
+			<many-to-many class="com.wj.erp.entity.Role" column="roleuuid"></many-to-many>
+		</bag>
+		
 	</class>
 </hibernate-mapping>
