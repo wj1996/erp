@@ -26,6 +26,8 @@
 				/goodstypeAction_*=anon
 				
 				
+				/*_list=perms[]
+				
 				/supplier.html=perms["供应商管理","客户管理"]
 				/supplierAction_*=perms["供应商管理","客户管理"]
 				/orders.html=perms["销售订单查询","销售订单录入","销售订单出库","销售管理","采购管理","采购订单申请","采购订单查询","采购审核","采购入库","采购确认"]
@@ -43,7 +45,7 @@
 				/dep.html=perms["部门"]
 				/depAction_*=perms["部门"]
 				/emp.html=perms["员工"]
-				/empAction_*=perms["员工"]
+				<!-- /empAction_*=perms["员工"] -->
 				/pwd.html=perms["重置密码"]
 				/report_order.html=perms["销售统计报表"]
 				/report_trend.html=perms["销售趋势报表"]
@@ -64,5 +66,17 @@
 	<bean id="erpAuthorizationFilter" class="com.wj.erp.filter.ErpAuthorizationFilter">
 		
 	</bean>
+	
+	<!-- 启动shiro注解 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<!-- 默认使用JDK代理，如被代理类没有实现接口，必须使用下列配置并开启cglib代理 -->
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	
+	<!-- 对安全管理器增强代码，spring后处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
 </beans>

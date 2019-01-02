@@ -18,6 +18,9 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.redsum.bos.ws.Waybilldetail;
@@ -65,6 +68,24 @@ public class OrdersBizImpl extends BaseBizImpl<Orders> implements IOrdersBiz {
 
 	@Override
 	public void add(Orders orders) {
+		
+		
+		Subject subject = SecurityUtils.getSubject();
+		
+		//采购订单认证，代码级别的权限控制
+		if(Constant.TYPE_IN.equals(orders.getType())) {
+			if(!subject.isPermitted("采购订单申请")) {
+				throw new ErpException("权限不足");
+			}
+		}else if(Constant.TYPE_OUT.equals(orders.getType())) {
+			if(!subject.isPermitted("销售订单录入")) {
+				throw new ErpException("权限不足");
+			}
+		}else {
+			throw new ErpException("非法参数");
+		}
+		
+		
 		orders.setState(Constant.STATE_CREATE);
 //		orders.setType(Constant.TYPE_IN); //由前台传入
 		orders.setCreatetime(new Date());
@@ -149,6 +170,7 @@ public class OrdersBizImpl extends BaseBizImpl<Orders> implements IOrdersBiz {
 	 * 审核
 	 */
 	@Override
+	@RequiresPermissions("采购审核")
 	public void doCheck(Long uuid, Long empUuid) {
 		// 获取订单，进入持久化状态
 		Orders order = ordersDao.getById(uuid);

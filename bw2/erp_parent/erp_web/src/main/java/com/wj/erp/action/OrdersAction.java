@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
@@ -75,8 +76,10 @@ public class OrdersAction extends BaseAction<Orders> {
 		}
 		try {
 			ordersBiz.doCheck(getId(), loginUser.getUuid());
-			ajaxReturn(false,"审核成功！");
-		} catch(ErpException e) {
+			ajaxReturn(true,"审核成功！");
+		} catch(UnauthorizedException e) {
+			ajaxReturn(false,"权限不足！");
+		}catch(ErpException e) {
 			ajaxReturn(false,e.getMessage());
 		}catch (Exception e) {
 			ajaxReturn(false,"审核失败！");

@@ -36,6 +36,8 @@ public class ErpRealm extends AuthorizingRealm{
 //		info.addStringPermission("部门");
 		//获取当前登录用户的菜单权限
 		Emp emp = (Emp) principals.getPrimaryPrincipal();
+		//从缓存中获取menuList
+		
 		List<Menu> list = empBiz.getMenusByEmpuuid(emp.getUuid());
 		for(Menu menu:list) {
 			//使用menuname来作为授权里面的key值，配置授权访问的URL=的右边是菜单名称
