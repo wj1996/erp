@@ -16,11 +16,12 @@ import com.wj.erp.biz.interfaces.IEmpBiz;
 import com.wj.erp.entity.Emp;
 import com.wj.erp.entity.Menu;
 
+import redis.clients.jedis.Jedis;
+
 public class ErpRealm extends AuthorizingRealm{
 	
 	
 	private IEmpBiz empBiz;
-	
 
 	public void setEmpBiz(IEmpBiz empBiz) {
 		this.empBiz = empBiz;
@@ -36,7 +37,8 @@ public class ErpRealm extends AuthorizingRealm{
 //		info.addStringPermission("部门");
 		//获取当前登录用户的菜单权限
 		Emp emp = (Emp) principals.getPrimaryPrincipal();
-		//从缓存中获取menuList
+		//从缓存中获取menuList,Redis不支持对象的存储，支持字符串的存储
+		
 		
 		List<Menu> list = empBiz.getMenusByEmpuuid(emp.getUuid());
 		for(Menu menu:list) {

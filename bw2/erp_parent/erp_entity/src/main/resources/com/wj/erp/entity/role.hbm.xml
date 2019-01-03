@@ -14,5 +14,11 @@
 			<key column="roleuuid"></key>
 			<many-to-many class="com.wj.erp.entity.Menu" column="menuuuid"></many-to-many>
 		</bag>
+		
+		<!-- 反查，角色下有哪些用户 -->
+		<bag name="empList" order-by="empuuid" table="emp_role">
+			<key column="roleuuid"></key>
+			<many-to-many class="com.wj.erp.entity.Emp" column="empuuid"></many-to-many>
+		</bag>
 	</class>
 </hibernate-mapping>

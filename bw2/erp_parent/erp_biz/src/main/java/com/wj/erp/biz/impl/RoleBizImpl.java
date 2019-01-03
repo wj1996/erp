@@ -8,9 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wj.erp.biz.interfaces.IRoleBiz;
 import com.wj.erp.dao.interfaces.IMenuDao;
 import com.wj.erp.dao.interfaces.IRoleDao;
+import com.wj.erp.entity.Emp;
 import com.wj.erp.entity.Menu;
 import com.wj.erp.entity.Role;
 import com.wj.erp.entity.Tree;
+
+import redis.clients.jedis.Jedis;
 /**
  * 角色业务逻辑层
  * @author [author]
@@ -21,7 +24,13 @@ public class RoleBizImpl extends BaseBizImpl<Role> implements IRoleBiz{
 	
 	private IRoleDao roleDao;
 	private IMenuDao menuDao;
+	private Jedis jedis;
 	
+	
+	public void setJedis(Jedis jedis) {
+		this.jedis = jedis;
+	}
+
 	public void setRoleDao(IRoleDao roleDao) {
 		this.roleDao = roleDao;
 		super.setBaseDao(roleDao);
@@ -69,6 +78,17 @@ public class RoleBizImpl extends BaseBizImpl<Role> implements IRoleBiz{
 		for(String id:ids) {
 			menu = menuDao.getById(id);
 			role.getMenus().add(menu);
+		}
+		
+		//通过角色反查属于这个角色的有哪些用户
+		List<Emp> empList = role.getEmpList();
+		//清除这些缓存
+		try {
+			for(Emp emp : empList) {
+				jedis.del("menuList" + emp.getUuid());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}

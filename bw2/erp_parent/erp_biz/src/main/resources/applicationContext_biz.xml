@@ -15,6 +15,7 @@
 		<property name="empDao" ref="empDao" />
 		<property name="roleDao" ref="roleDao" />
 		<property name="menuDao" ref="menuDao" />
+		<property name="jedis" ref="jedis" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="empRoleBiz" class="com.wj.erp.biz.impl.EmpRoleBizImpl">
@@ -63,6 +64,7 @@
 	<bean id="roleBiz" class="com.wj.erp.biz.impl.RoleBizImpl">
 		<property name="roleDao" ref="roleDao" />
 		<property name="menuDao" ref="menuDao" />
+		<property name="jedis" ref="jedis" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="roleMenuBiz" class="com.wj.erp.biz.impl.RoleMenuBizImpl">

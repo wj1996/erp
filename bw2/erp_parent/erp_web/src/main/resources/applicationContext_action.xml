@@ -33,6 +33,7 @@
 	<!-- [comment] -->
 	<bean id="menuAction" class="com.wj.erp.action.MenuAction" scope="prototype">
 		<property name="menuBiz" ref="menuBiz" />
+		<property name="empBiz" ref="empBiz" />
 	</bean>
 	<!-- [comment] -->
 	<bean id="orderdetailAction" class="com.wj.erp.action.OrderdetailAction" scope="prototype">

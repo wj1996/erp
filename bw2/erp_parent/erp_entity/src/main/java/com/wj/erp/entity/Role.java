@@ -18,6 +18,15 @@ public class Role implements Serializable{
 	@JSONField(serialize=false)
 	private List<Menu> menus; //角色下的菜单权限
 	
+	private List<Emp> empList;
+	
+	
+	public List<Emp> getEmpList() {
+		return empList;
+	}
+	public void setEmpList(List<Emp> empList) {
+		this.empList = empList;
+	}
 	public List<Menu> getMenus() {
 		return menus;
 	}

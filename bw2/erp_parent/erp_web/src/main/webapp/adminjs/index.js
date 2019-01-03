@@ -31,8 +31,8 @@ $(function(){
 	//给菜单赋值
 	$.ajax({
 		async:false,
-//		url:"menuAction_getMenuTree",
-		url:"empAction_readMenusByEmpuuid",
+		url:"menuAction_getMenuTree",
+//		url:"empAction_readMenusByEmpuuid",
 		dataType:"json",
 		data:{'id':"0"},
 		success:function(rtn){
